@@ -1,0 +1,150 @@
+body {margin:0; background-color: #f9f9f9}
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 12px 14px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/*ul.topnav li a:hover {background-color: #111;}*/
+
+ul.topnav li.icon {display: none;}
+
+@media screen and (max-width:680px) {
+  ul.topnav li:not(:first-child) {display: none;}
+  ul.topnav li.icon {
+    float: right;
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width:680px) {
+  ul.topnav.responsive {position: relative;}
+  ul.topnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  ul.topnav.responsive li {
+    float: none;
+    display: inline;
+  }
+  ul.topnav.responsive li a {
+    display: block;
+    text-align: left;
+  }
+}
+
+/*Generales*/
+.active 
+{ 
+  background-color: #4caf50 !important;
+  color: #fff !important; 
+}
+
+.hidden
+{
+  display: none;
+}
+
+.divForm 
+{
+  clear: left;
+  margin-bottom: 3px;
+}
+
+/*Loading*/
+.loading {
+    width: 102px;
+    height: 102px;
+    background-image: url(../img/sprite-loading.png);
+    
+    -webkit-animation: play .6s steps(8) infinite;
+       -moz-animation: play .6s steps(4) infinite;
+        -ms-animation: play .6s steps(4) infinite;
+         -o-animation: play .6s steps(4) infinite;
+            animation: play .6s steps(4) infinite;
+}
+
+@-webkit-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -816px; }
+}
+
+@-moz-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -816px; }
+}
+
+@-ms-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -816px; }
+}
+
+@-o-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -816px; }
+}
+
+@keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -816px; }
+}
+
+@media (max-width: 1000px) {
+.center-inner{left:25%;top:25%;position:absolute;width:50%;height:300px;text-align:center;max-width:500px;max-height:500px;}
+}
+@media (min-width: 1000px) {
+.center{left:50%;top:25%;position:absolute;}
+.center-inner{width:500px;height:100%;margin-left:-250px;height:300px;text-align:center;max-width:500px;max-height:500px;}}
+
+/*Operation*/
+h1, .selected
+{
+  color: #0d5fb5;
+}
+
+legend
+{
+  color: #0d5fb5!important;
+}
+
+textarea
+{
+  width: 97%;
+}
+
+/*Evidencias fotograficas*/
+.l-box 
+{
+  padding: 1em;
+}
+
+/*#evidencias ul
+{
+  list-style-type: none;
+}
+#evidencias ul li
+{
+  padding: 1%;
+  float: left;
+}
+div.photo
+{
+  width: 100px;
+  height: 100px;
+  background-size: 100% 100%;
+}*/

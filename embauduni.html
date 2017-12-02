@@ -1,0 +1,83 @@
+<h1>Embarques - Auditor&iacute;a de Unidades</h1>
+<div id="searchData"></div>
+<div class="divForm">
+    <fieldset>
+        <legend>Fecha de carga solicitada</legend>
+        <div class="pure-control-group">
+            <input readonly id="txt_fecha_carga_db">
+        </div>
+        <legend>Hora de carga solicitada</legend>
+        <div class="pure-control-group">
+            <input readonly id="txt_hora_carga_db">
+        </div>
+        <legend>Fecha de la cita</legend>
+        <div class="pure-control-group">
+            <input readonly id="txt_fecha_cita_db">
+        </div>
+        <legend>Hora de la cita</legend>
+        <div class="pure-control-group">
+            <input readonly id="txt_hora_cita_db">
+        </div>
+        <legend>Linea de transporte</legend>
+        <div class="pure-control-group">
+            <input readonly id="txt_linea_transporte_db">
+        </div>
+        <legend>Nombre del Operador</legend>
+        <div class="pure-control-group">
+            <input id="txt_operador" type="text" placeholder="Operador">
+        </div>
+        <legend>Tipo de Veh&iacute;culo</legend>
+        <div class="pure-control-group">
+            <select id="ddl_tipovehiculo"></select>
+        </div>
+        <legend>Placas del Veh&iacute;culo</legend>
+        <div class="pure-control-group">
+            <div class="pure-form pure-form-aligned" id="pnl_datosvehiculo">
+                <div class="pure-form">
+                    <input class="datoVehiculo" type="text" id="txt_placa" placeholder="Placa del vehículo">
+                </div>
+                <div class="pure-form">
+                    <input class="datoVehiculo" type="text" id="txt_caja" placeholder="Placa de la Caja">
+                </div>
+                <div class="pure-form">
+                    <input class="datoVehiculo" type="text" id="txt_caja1" placeholder="No. del Contenedor 1">
+                </div>
+                <div class="pure-form">
+                    <input class="datoVehiculo" type="text" id="txt_caja2" placeholder="No. del Contenedor 2">
+                </div>
+            </div>
+        </div>
+        <legend>Sello</legend>
+        <div class="pure-control-group">
+            <input type="text" id="txt_sello" placeholder="Sello">
+        </div>
+    </fieldset>
+</div>
+
+<table>
+    <tbody width="97%" id="tbody_condiciones" class="pure-table pure-table-horizontal"></tbody>
+</table>
+
+<div id="evidencias" class="pure-g"></div>
+
+<div style="clear: left;" class="pure-form pure-form-aligned">
+    <fieldset>
+        <legend>Acta Informativa</legend>
+        <div class="pure-control-group">
+            <textarea id="txt_relato" placeholder="Informe/Relato de Hechos"></textarea>
+        </div>
+        <div class="pure-controls">
+            <button id="btn_capturePhoto" class="pure-button">
+                <i class="sprite icon Camera"></i>
+                &nbsp;Evidencias
+            </button>
+        </div>
+        <legend>Vigilante</legend>
+        <div class="pure-control-group">
+            <select id="ddl_vigilante"></select>
+        </div>
+        <div class="pure-controls">
+            <button id="btn_save" class="pure-button pure-button-primary">Guardar</button>
+        </div>
+    </fieldset>
+</div>
