@@ -39,16 +39,17 @@ var DesmaqController = function() {
 					if(x % 2 != 0)
 						row.className = "pure-table-odd";
 
-					var cellNum = row.insertCell(0);
-					var cellTrafico = row.insertCell(1);
-					var cellPedido = row.insertCell(2);
-					var cellPiezas = row.insertCell(3);
+					var cellTrafico = row.insertCell(0);
+					var cellPedido = row.insertCell(1);
+					var cellPiezas = row.insertCell(2);
+					var cellPasos = row.insertCell(3);
 					
-					cellNum.innerHTML = Number(x) + 1;
 					cellTrafico.innerHTML = arrCapturados[x].Trafico;
 					cellPedido.innerHTML = arrCapturados[x].Pedido;
 					cellPiezas.setAttribute('align', 'center');
 					cellPiezas.innerHTML = arrCapturados[x].Piezas_maquiladas_hoy;
+					cellPasos.setAttribute('align', 'center');
+					cellPasos.innerHTML = arrCapturados[x].Num_pasos;
 
 					objPedLiv = new BeanEntrada_liverpool(
 						arrCapturados[x].Id,
@@ -59,7 +60,8 @@ var DesmaqController = function() {
 						arrCapturados[x].Piezas,
 						arrCapturados[x].Fecha_confirma,
 						arrCapturados[x].Piezas_maq,
-						arrCapturados[x].Fecha_maquila
+						arrCapturados[x].Fecha_maquila,
+						arrCapturados[x].Num_pasos
 					);
 					objPedLiv.Piezas_maquiladas_hoy = arrCapturados[x].Piezas_maquiladas_hoy;
 					arrXguardar.push(objPedLiv);

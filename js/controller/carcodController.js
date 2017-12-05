@@ -27,7 +27,8 @@ var CarcodController = function() {
 						data[x].Piezas,
 						data[x].Fecha_confirma,
 						data[x].Piezas_maq,
-						data[x].Fecha_maquila
+						data[x].Fecha_maquila,
+						data[x].Num_pasos
 					)
 					if(arrCodMaq.length>0) {
 					 	codMaq = arrCodMaq.filter(function(obj) {

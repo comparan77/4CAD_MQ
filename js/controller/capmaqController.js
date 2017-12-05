@@ -73,11 +73,13 @@ var CapmaqController = function() {
 					x$('#lbl_piezas').html(pedidoFinded[0].Piezas);
 					x$('#lbl_piezas_x_maq').html(pedidoFinded[0].Piezas - pedidoFinded[0].Piezas_maq - pedidoFinded[0].Piezas_maquiladas_hoy);
 					x$('#txt_pieza_maq').attr('value', pedidoFinded[0].Piezas_maquiladas_hoy);
+					x$('#txt_num_pasos').attr('value', pedidoFinded[0].Num_pasos);
 					if(pedidoFinded[0].Piezas_maquiladas_hoy != 0) {
 						Common.notificationAlert('El número de pedido ya cuenta con una captura de maquila.', 'Advertencia', 'Ok');	
 					}
 					else{
 						x$('#txt_pieza_maq').attr('value','');
+						x$('#txt_num_pasos').attr('value','');
 					}
 					x$('#div_maquila').removeClass('hidden');
 					x$('#div_search').addClass('hidden');
@@ -101,6 +103,9 @@ var CapmaqController = function() {
 
 				var d = new Date();
 				pedidoFinded[0].Fecha_maquila = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+
+				var num_pasos = String(x$('#txt_num_pasos').attr('value')) * 1;
+				pedidoFinded[0].Num_pasos = num_pasos;
 
 				Common.setEstatusBtn('btn_save', 'Guardando maquila ...', true);
 				Common.notificationAlert('La maquila ha sido guardada correctamente.', 'Info', 'Ok');
