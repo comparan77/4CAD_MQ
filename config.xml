@@ -113,5 +113,4 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.1.2" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
-    <engine name="android" spec="^6.3.0" />
 </widget>
