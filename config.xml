@@ -2,7 +2,7 @@
 <widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>4CAD-MQ</name>
     <description>
-        Sistema para el registro de maquila.
+        Sistema para el registro de la maquila.
     </description>
     <author email="gilberto.cruz@yaaxil.com" href="http://yaaxil.com">
         Yaaxil Team
