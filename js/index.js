@@ -19,7 +19,7 @@
 
 //var lstTarima = [];
 //var urlHandler = 'https://servidor.casc.com.mx/';
-var urlHandler = 'http://192.168.1.66:8083/';
+var urlHandler = 'http://yaaxil.ddns.net:8083/';
 
 var oUsuario;
 var oCADController = new CADController();
