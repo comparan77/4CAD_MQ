@@ -3,6 +3,7 @@ var CADController = function() {
 
     function create(type){
         var obj;
+        console.log(type);
         try {
             if (type === "login") {
                 obj = new Login();

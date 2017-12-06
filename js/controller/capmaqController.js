@@ -6,23 +6,23 @@ var CapmaqController = function() {
 	var pedidoFinded;
 
 	function init() {
-		arrExistentes = localStorage.getItem('pedidos');
-		if(arrExistentes!=null && arrExistentes.length>0) {
-			arrExistentes = JSON.parse(arrExistentes);
-			init_controls();
-		}
-		else {
-			Common.setEstatusBtn('btn_search','<i class="sprite icon Search"></i>Buscar Tr&aacute;fico', true);
-			Common.setEstatusBtn('btn_save','Guardar Maquila', true);
-			Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
-		}
+		// arrExistentes = localStorage.getItem('pedidos');
+		// if(arrExistentes!=null && arrExistentes.length>0) {
+		// 	arrExistentes = JSON.parse(arrExistentes);
+		// 	init_controls();
+		// }
+		// else {
+		// 	Common.setEstatusBtn('btn_search_trafico','<i class="sprite icon Search"></i>Buscar Tr&aacute;fico', true);
+		// 	Common.setEstatusBtn('btn_save','Guardar Maquila', true);
+		// 	Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
+		// }
 	} 
 
 	function init_controls() {
-		btn_search_trafico_click();
-		btn_search_pedido_click();
-		btn_save_click();
-		div_new_search_click();
+		// btn_search_trafico_click();
+		// btn_search_pedido_click();
+		// btn_save_click();
+		// div_new_search_click();
 	}
 
 	function div_new_search_click() {
@@ -32,15 +32,14 @@ var CapmaqController = function() {
 	}
 
 	function btn_search_trafico_click() {
-		x$('#btn_search').on('click', function() {
+		x$('#btn_search_trafico').on('click', function() {
 			try {
 				var traficoBuscado = String(x$('#txt_trafico').attr('value'));
 
 				x$('#div_pedido').addClass('hidden');
 				x$('#div_maquila').addClass('hidden');
-
 				traficoBuscado = traficoBuscado.toUpperCase();
-				Common.setEstatusBtn('btn_search', 'Buscando trafico ...', true);
+				Common.setEstatusBtn('btn_search_trafico', 'Buscando trafico ...', true);
 				traficoFinded = arrExistentes.filter(function (obj) {
 					return obj.Trafico.toUpperCase() == traficoBuscado;
 				});
@@ -51,9 +50,9 @@ var CapmaqController = function() {
 					Common.notificationAlert('El número de tráfico proporcionado no existe.', 'Advertencia', 'Ok');
 				}
 			} catch (error) {
-				Common.setEstatusBtn('btn_search', '<i class="sprite icon Search"></i>Buscar Tráfico', false);	
+				Common.setEstatusBtn('btn_search_trafico', '<i class="sprite icon Search"></i>Buscar Tráfico', false);	
 			} 
-			Common.setEstatusBtn('btn_search', '<i class="sprite icon Search"></i>Buscar Tráfico', false);	
+			Common.setEstatusBtn('btn_search_trafico', '<i class="sprite icon Search"></i>Buscar Tráfico', false);	
         });
 	}
 

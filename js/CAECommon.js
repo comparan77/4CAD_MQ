@@ -118,11 +118,6 @@ Common.getPhoto = function (source) {
     sourceType: source });
 }
 
-/*function onSuccess(imageData) {
-    document.getElementById("foto").style.backgroundImage="url('data:image/jpeg;base64,"+imageData+"')";
-    document.getElementById("foto").style.backgroundSize="100% 100%";
-}*/
-
 function onPhotoURISuccess(imageURI) {
     document.getElementById("foto").style.backgroundImage="url('"+imageURI+"')";
     document.getElementById("foto").style.backgroundSize="100% 100%";
