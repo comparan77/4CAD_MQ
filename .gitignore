@@ -1,0 +1,7 @@
+.gitignore
+res/.pgbomit
+res/icon/ios/
+res/icon/windows/
+res/icon/wp8/
+res/screen/
+js/global.js
