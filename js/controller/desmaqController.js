@@ -10,8 +10,7 @@ var DesmaqController = function() {
 			OperationModel.carga_maquila_Liverpool(arrXguardar, function(data) { 
 				Common.notificationAlert('Se subieron las capturas de maquila correctamente.', 'Info', 'Ok');
 				localStorage.clear();
-				var oCadCtr = new CADController();
-				oCadCtr.Create('desmaq');
+				oCADController.Create('desmaq');
 			});
 		} catch (error) {
 			Common.notificationAlert(error.message, 'Error', 'Ok');

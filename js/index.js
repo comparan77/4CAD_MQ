@@ -22,10 +22,10 @@
 var urlHandler = 'http://192.168.1.66:83/';
 
 var oUsuario;
-var oCADController = new CADController();
+var oCADController;
 var menuAct = 'inicio';
 
-var oIndexCtrl = new IndexController();
+var oIndexCtrl;
 
 var app = {
     // Application Constructor
@@ -55,6 +55,8 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         try {
+            oIndexCtrl = new IndexController();
+            oCADController = new CADController();
             oCADController.Create('login');
         } catch (error) {
             alert(error.message);

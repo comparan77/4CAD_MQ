@@ -3,7 +3,6 @@ var CADController = function() {
 
     function create(type){
         var obj;
-        console.log(type);
         try {
             if (type === "login") {
                 obj = new Login();
@@ -13,18 +12,23 @@ var CADController = function() {
                 obj = new CarcodController();
             } else if (type === "capmaq") {
                 obj = new CapmaqController();
-            } else if (type == "desmaq") {
+            } else if (type === "desmaq") {
                 obj = new DesmaqController();
             }
             x$('#div_' + type).xhr('./' + type + '.html', {
                 async: true,
                 callback: function() { 
-                    x$('#div_' + type).html(this.responseText);
-                    obj.Init();
+                    try {
+                        console.log(type);
+                        x$('#div_' + type).html(this.responseText);
+                        obj.Init();    
+                    } catch (error) {
+                        console.log('error CADController, ' + type + ' xhr: ' + error.message);
+                    }
                 },
             });
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
         
     }

@@ -6,23 +6,23 @@ var CapmaqController = function() {
 	var pedidoFinded;
 
 	function init() {
-		// arrExistentes = localStorage.getItem('pedidos');
-		// if(arrExistentes!=null && arrExistentes.length>0) {
-		// 	arrExistentes = JSON.parse(arrExistentes);
-		// 	init_controls();
-		// }
-		// else {
-		// 	Common.setEstatusBtn('btn_search_trafico','<i class="sprite icon Search"></i>Buscar Tr&aacute;fico', true);
-		// 	Common.setEstatusBtn('btn_save','Guardar Maquila', true);
-		// 	Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
-		// }
+		arrExistentes = localStorage.getItem('pedidos');
+		if(arrExistentes!=null && arrExistentes.length>0) {
+			arrExistentes = JSON.parse(arrExistentes);
+			init_controls();
+		}
+		else {
+			Common.setEstatusBtn('btn_search_trafico','<i class="sprite icon Search"></i>Buscar Tr&aacute;fico', true);
+			Common.setEstatusBtn('btn_save','Guardar Maquila', true);
+			Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
+		}
 	} 
 
 	function init_controls() {
-		// btn_search_trafico_click();
-		// btn_search_pedido_click();
-		// btn_save_click();
-		// div_new_search_click();
+		btn_search_trafico_click();
+		btn_search_pedido_click();
+		btn_save_click();
+		div_new_search_click();
 	}
 
 	function div_new_search_click() {
@@ -118,7 +118,6 @@ var CapmaqController = function() {
 	}
 	
 	function clear_form() {
-		var oCadCtr = new CADController();
-		oCadCtr.Create('capmaq');
+		oCADController.Create('capmaq');
 	}
 }
