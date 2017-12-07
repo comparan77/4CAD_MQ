@@ -20,11 +20,28 @@ var CapmaqController = function() {
 	} 
 
 	function init_controls() {
-		oNavigator.Init();
+		oNavigator.Init(2);
 		btn_search_trafico_click();
 		btn_search_pedido_click();
+		
+		servicio_click();
+		
 		btn_save_click();
 		div_new_search_click();
+
+
+	}
+
+	function servicio_click() {
+		x$('#opt-price-label').on('click', function() {
+			oNavigator.EnabledBtnNext();
+		});
+
+		x$('#opt-uva').on('click', function() {
+			oNavigator.EnabledBtnNext();
+		});
+
+
 	}
 
 	function div_new_search_click() {
@@ -74,6 +91,11 @@ var CapmaqController = function() {
 					x$('#lbl_piezas').html(pedidoFinded[0].Piezas);
 					x$('#lbl_piezas_x_maq').html(pedidoFinded[0].Piezas - pedidoFinded[0].Piezas_maq - pedidoFinded[0].Piezas_maquiladas_hoy);
 					oNavigator.EnabledBtnNext();
+					oNavigator.NextClick(function() {
+						if (document.getElementById('opt-price-label').checked || document.getElementById('opt-uva').checked) {
+							oNavigator.EnabledBtnNext();
+						  }
+					});
 					// x$('#txt_pieza_maq').attr('value', pedidoFinded[0].Piezas_maquiladas_hoy);
 					// x$('#txt_num_pasos').attr('value', pedidoFinded[0].Num_pasos);
 					// if(pedidoFinded[0].Piezas_maquiladas_hoy != 0) {
@@ -128,8 +150,11 @@ var CapmaqController = function() {
 var navigator = function() {
 
 	var stepNum;
+	var MaxStep;
 	this.Init = init;
-	this.NextClick = nextClick;
+	this.NextClick = nxtClick;
+	this.PrevClick = prvClick;
+	var _callback;
 	this.EnabledBtnNext = enabledBtnNext;
 	this.ShowBtnNext = showBtnNext;
 	this.DisabledBtnNext = disabledBtnNext;
@@ -139,8 +164,9 @@ var navigator = function() {
 	this.DisabledBtnPrev = disabledBtnPrev;
 	this.HideBtnPrev = hideBtnPrev;
 
-	function init() {
+	function init(maxStep) {
 		stepNum = 1;
+		MaxStep = maxStep;
 		hideBtnPrev();
 		disabledBtnNext();
 		initControls();
@@ -151,14 +177,28 @@ var navigator = function() {
 		nextClick();
 	}
 
+	function nxtClick(callback) {
+		_callback = callback;
+	}
+
+	function prvClick(callback) {
+		_callback = callback;
+	}
+
 	function nextClick() {
-		console.log('aqui 1');
 		x$('#lnk_sig').on('click', function() {
-			console.log('aqui');
 			x$('#step_' + stepNum).addClass('hidden');
 			stepNum ++;
 			x$('#step_' + stepNum).removeClass('hidden');
 			enabledBtnPrev();
+			disabledBtnNext();
+			if(stepNum == MaxStep) {
+				hideBtnNext();
+			}
+			if(_callback) {
+				_callback();
+				_callback = undefined;
+			} 
 		});
 	}
 
@@ -169,6 +209,11 @@ var navigator = function() {
 			x$('#step_' + stepNum).removeClass('hidden');
 			if(stepNum == 1)
 				hideBtnPrev();
+			enabledBtnNext();
+			if(_callback) {
+				_callback();
+				_callback = undefined;
+			} 
 		});
 	}
 
