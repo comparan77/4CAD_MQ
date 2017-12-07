@@ -1,4 +1,4 @@
-var urlHandler = 'http://yaaxil.ddns.net:83/';
+var urlHandler = 'http://192.168.1.66:83/';
 
 var oUsuario;
 var oCADController;
