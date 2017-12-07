@@ -11,4 +11,12 @@ var BeanEntrada_liverpool = function (id, id_entrada, proveedor, trafico, pedido
     this.Fecha_maquila = fecha_maquila;
     this.Piezas_maquiladas_hoy = 0;
     this.Num_pasos = num_pasos;
+    this.PLstMaquila;
+}
+
+var BeanEntrada_liverpool_maquila = function (id, id_entrada_liverpool, piezas, fecha_maq) {
+    this.Id = id;
+    this.Id_entrada_liverpool = id_entrada_liverpool;
+    this.Piezas = piezas;
+    this.Fecha_maq = fecha_maq;
 }
