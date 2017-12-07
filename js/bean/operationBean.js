@@ -19,4 +19,11 @@ var BeanEntrada_liverpool_maquila = function (id, id_entrada_liverpool, piezas, 
     this.Id_entrada_liverpool = id_entrada_liverpool;
     this.Piezas = piezas;
     this.Fecha_maq = fecha_maq;
+    this.PEntLivSer;
+}
+
+var BeanEntrada_liverpool_servicio = function (id, id_liverpool_maquila, id_servicio) {
+    this.Id = id;
+    this.Id_liverpool_maquila = id_liverpool_maquila;
+    this.Id_servicio = id_servicio;
 }
