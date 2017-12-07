@@ -19,7 +19,6 @@ var CADController = function() {
                 async: true,
                 callback: function() { 
                     try {
-                        console.log(type);
                         x$('#div_' + type).html(this.responseText);
                         obj.Init();    
                     } catch (error) {
