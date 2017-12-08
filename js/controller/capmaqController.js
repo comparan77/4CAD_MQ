@@ -5,6 +5,7 @@ var CapmaqController = function() {
 	var traficoFinded;
 	var pedidoFinded;
 	var oNavigator = new navigator();
+	var vPaso = 0;
 
 	function init() {
 		arrExistentes = localStorage.getItem('pedidos');
@@ -20,25 +21,120 @@ var CapmaqController = function() {
 	} 
 
 	function init_controls() {
-		oNavigator.Init(2);
+		oNavigator.Init(4);
 		btn_search_trafico_click();
 		btn_search_pedido_click();
 		
 		servicio_click();
 		
+		getPhoto_click();
+
 		btn_save_click();
 		div_new_search_click();
+	}
 
+	function appendPaso(txtPromt) {
 
+		try {
+			var pasos = document.getElementById('div_pasos');
+			
+			var divRow = document.createElement('div');
+			divRow.setAttribute('id', 'div_paso_' + vPaso)
+			divRow.className = 'pure-g';
+
+			var divCellPaso = document.createElement('div');
+			divCellPaso.className = 'pure-u-1-3';
+			var divSpnPaso = document.createElement('span');
+			divSpnPaso.innerHTML = vPaso;
+			divSpnPaso.className = 'spnPaso';
+			divCellPaso.appendChild(divSpnPaso);
+			divRow.appendChild(divCellPaso);
+
+			var divCellImg = document.createElement('div');
+			divCellImg.className = 'pure-u-1-3';
+			var imgPaso = document.createElement('img');
+			var img = document.getElementById("img_foto");
+			imgPaso.setAttribute('src', img.getAttribute('src'));
+			imgPaso.setAttribute('width', '50%');
+			divCellImg.appendChild(imgPaso);
+			divRow.appendChild(divCellImg);
+	
+			var divCellDesc = document.createElement('div');
+			divCellDesc.className = 'pure-u-1-3';
+			divCellDesc.innerHTML = txtPromt.toUpperCase();
+			divRow.appendChild(divCellDesc);
+	
+			pasos.appendChild(divRow);
+		} catch (error) {
+			console.log('appendPaso error: ' + error.message)
+		}
+		
+	}
+
+	function setPhoto(results) {
+		switch (results.buttonIndex) {
+			case 2:
+				var txtPromt = results.input1.trim();
+				if(txtPromt.length <= 0) {
+					Common.notificationAlert(
+						'Es necesario proporcionar la descripción del paso',
+						'Error',
+						'Ok'
+					);
+				}
+				else {
+					vPaso++;
+					appendPaso(txtPromt);
+					if(vPaso>0) {
+						oNavigator.EnabledBtnNext();
+						oNavigator.SetStepValid(3);						
+					}
+				}
+				break;
+		
+			default:
+				break;
+		}		
+	}
+
+	function photoReady(imageData) {
+		try {
+			var img = document.getElementById("img_foto");
+			img.setAttribute('src', imageData);
+			getFileContentAsBase64(imageData,function(base64Image) {
+				//console.log(base64Image); 
+			});
+			Common.notificationPrompt(
+				'Descripción del paso',
+				'Pasos',
+				['Cancelar','Ok'],
+				'',
+				setPhoto
+			);
+		} catch (error) {
+			console.log('PhotoReady: ' + error.message)
+		}
+    }
+
+	function getPhoto_click() {
+		x$('#btn_getPhoto').on('click', function() {
+            try {
+				Common.getPhoto(photoReady);  
+            } catch (error) {
+                alert(error);
+            }
+        });
 	}
 
 	function servicio_click() {
 		x$('#opt-price-label').on('click', function() {
 			oNavigator.EnabledBtnNext();
+			oNavigator.SetStepValid(2);
 		});
 
 		x$('#opt-uva').on('click', function() {
 			oNavigator.EnabledBtnNext();
+			oNavigator.SetStepValid(2);
 		});
 
 
@@ -89,13 +185,12 @@ var CapmaqController = function() {
 				if(pedidoFinded.length > 0) {
 					x$('#lbl_proveedor').html(pedidoFinded[0].Proveedor);
 					x$('#lbl_piezas').html(pedidoFinded[0].Piezas);
+
+					x$('#lbl_proveedor_fin').html(pedidoFinded[0].Proveedor);
+					x$('#lbl_piezas_fin').html(pedidoFinded[0].Piezas);
+
 					x$('#lbl_piezas_x_maq').html(pedidoFinded[0].Piezas - pedidoFinded[0].Piezas_maq - pedidoFinded[0].Piezas_maquiladas_hoy);
 					oNavigator.EnabledBtnNext();
-					oNavigator.NextClick(function() {
-						if (document.getElementById('opt-price-label').checked || document.getElementById('opt-uva').checked) {
-							oNavigator.EnabledBtnNext();
-						  }
-					});
 					// x$('#txt_pieza_maq').attr('value', pedidoFinded[0].Piezas_maquiladas_hoy);
 					// x$('#txt_num_pasos').attr('value', pedidoFinded[0].Num_pasos);
 					// if(pedidoFinded[0].Piezas_maquiladas_hoy != 0) {
@@ -151,10 +246,9 @@ var navigator = function() {
 
 	var stepNum;
 	var MaxStep;
+	var arrStepValid = [];
 	this.Init = init;
-	this.NextClick = nxtClick;
-	this.PrevClick = prvClick;
-	var _callback;
+	this.SetStepValid = setStepValid;
 	this.EnabledBtnNext = enabledBtnNext;
 	this.ShowBtnNext = showBtnNext;
 	this.DisabledBtnNext = disabledBtnNext;
@@ -172,17 +266,14 @@ var navigator = function() {
 		initControls();
 	}
 
+	function setStepValid(step) {
+		if(arrStepValid.indexOf(step)<0)
+			arrStepValid.push(step);
+	}
+
 	function initControls() {
 		prevClick();
 		nextClick();
-	}
-
-	function nxtClick(callback) {
-		_callback = callback;
-	}
-
-	function prvClick(callback) {
-		_callback = callback;
 	}
 
 	function nextClick() {
@@ -191,14 +282,15 @@ var navigator = function() {
 			stepNum ++;
 			x$('#step_' + stepNum).removeClass('hidden');
 			enabledBtnPrev();
-			disabledBtnNext();
+			if(arrStepValid.indexOf(stepNum)<0)
+				disabledBtnNext();
+			else
+				enabledBtnNext();
+			
+			x$('#lnk_sig').html('SIG >');
 			if(stepNum == MaxStep) {
-				hideBtnNext();
+				x$('#lnk_sig').html('FIN');
 			}
-			if(_callback) {
-				_callback();
-				_callback = undefined;
-			} 
 		});
 	}
 
@@ -210,10 +302,6 @@ var navigator = function() {
 			if(stepNum == 1)
 				hideBtnPrev();
 			enabledBtnNext();
-			if(_callback) {
-				_callback();
-				_callback = undefined;
-			} 
 		});
 	}
 

@@ -92,6 +92,65 @@
 
 </div>
 
+<div id="step_3" class="hidden pure-form pure-form-aligned">
+        
+    <div class="header">
+        <h1>Captura de Maquila</h1>
+        <h2>Paso 3: Captura de pasos</h2>
+    </div>
+
+    <div class="pure-controls">
+        <button id="btn_getPhoto" class="pure-button">
+            <i class="sprite icon ImageFile"></i>
+            &nbsp;Subir Imagen
+        </button>
+    </div>
+
+    <div id="div_foto" class="pure-g" style="margin-top: .5em">
+        <img id="img_foto" width="25%" class="hidden">
+    </div>
+
+    <div id="div_pasos">
+        <div class="pure-g">
+            <div class="pure-u-1-3"><p># Paso</p></div>
+            <div class="pure-u-1-3"><p>Imagen</p></div>
+            <div class="pure-u-1-3"><p>Descripci&oacute;n</p></div>
+        </div>
+    </div>
+
+</div>
+        
+<div id="step_4" class="hidden pure-form pure-form-aligned">
+        
+    <div class="header">
+        <h1>Captura de Maquila</h1>
+        <h2>Paso 4: Captura de piezas</h2>
+    </div>
+
+    <div>
+        <span>Proveedor: <label class="selected" id="lbl_proveedor_fin"></label></span>
+    </div>
+    <div>
+        <span>Piezas Totales: <label class="selected" id="lbl_piezas_fin"></label></span>
+    </div>
+
+    <div>
+        <label>Hora Maquila:</label>
+        <input id="horaMaquila" type="time">
+    </div>
+
+    <div>
+        <input type="number" id="txt_pieza_maq" placeholder="Piezas Maquiladas">
+    </div>
+
+    <div class="pure-control-group">
+        <button id="btn_save_maquila" class="pure-button ">
+            <i class="sprite icon Save"></i>
+            &nbsp;Guardar Maquila
+        </button>
+    </div>
+</div>
+
 <footer class="navigator">
     <a href="#" id="lnk_ant">< ANT</a>
     <a href="#" id="lnk_sig">SIG ></a>

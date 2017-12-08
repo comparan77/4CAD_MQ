@@ -90,7 +90,7 @@ ul.topnav li.icon {display: none;}
 /*Generales*/
 .active 
 { 
-  background-color: #4caf50 !important;
+  background-color: #3b8bba !important;
   color: #fff !important; 
 }
 
@@ -193,6 +193,7 @@ div.photo
   margin: 0 auto;
   margin-right: 1em;
   margin-bottom: .5em;
+  margin-top: .5em;
   padding: .5em;
       padding-right: 1em;
       padding-left: 1em;
@@ -206,4 +207,12 @@ div.photo
   transition: 0.3s;
   font-size: 17px; 
   color: #333;
+}
+
+#div_pasos div {
+  border-bottom: 1px solid #eee; 
+}
+
+.spnPaso {
+  vertical-align: middle;
 }

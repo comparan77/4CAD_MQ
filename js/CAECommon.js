@@ -112,10 +112,11 @@ Common.capturePhoto = function(onSuccess) {
     });
 }
 
-Common.getPhoto = function (source) {
-    navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 90,
-        destinationType: destinationType.FILE_URI,
-    sourceType: source });
+Common.getPhoto = function (onSuccess) {
+    navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+    sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM 
+    });
 }
 
 function onPhotoURISuccess(imageURI) {
@@ -125,6 +126,26 @@ function onPhotoURISuccess(imageURI) {
 
 function onFail(message) {
     alert('Failed because: ' + message);
+}
+
+function getFileContentAsBase64(path,callback) {
+    window.resolveLocalFileSystemURL(path, gotFile, fail);
+            
+    function fail(e) {
+          alert('Cannot found requested file');
+    }
+
+    function gotFile(fileEntry) {
+           fileEntry.file(function(file) {
+              var reader = new FileReader();
+              reader.onloadend = function(e) {
+                   var content = this.result;
+                   callback(content);
+              };
+              // The most important point, use the readAsDatURL Method from the file plugin
+              reader.readAsDataURL(file);
+           });
+    }
 }
 
 /**Notificaciones */
