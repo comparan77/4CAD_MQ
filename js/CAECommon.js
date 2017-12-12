@@ -104,8 +104,8 @@ Common.fillDropDownList = function (ddl, data, firstOpt) {
 
 /**Funciones para la camra */
 Common.capturePhoto = function(onSuccess) {
-    navigator.camera.getPicture(onSuccess, onFail, { quality: 90,
-        destinationType: Camera.DestinationType.DATA_URL,
+    navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
         correctOrientation: true,
         targetWidth: 1000,
         targetHeight: 1000

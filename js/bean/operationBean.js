@@ -15,8 +15,14 @@ var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, pi
     this.Ref1 = ref1;
     this.Ref2 = ref2;
     this.PEntLiv;
+    this.PLstPasos = [];
 }
 
+var Bean_orden_trabajo_servicio_paso = function(id_orden_trabajo, id_servicio, foto64) {
+    this.Id_orden_trabajo = id_orden_trabajo;
+    this.Id_servicio = id_servicio;
+    this.Foto64 = foto64;
+}
 
 /**Entrada Auditoria Mercancia */
 var BeanEntrada_liverpool = function (id, id_entrada, proveedor, trafico, pedido, piezas, fecha_confirma, piezas_maq, fecha_maquila, num_pasos) {

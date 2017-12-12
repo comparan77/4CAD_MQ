@@ -4,7 +4,7 @@
         <h2>Paso 1: B&uacute;squeda de &Oacute;rdenes de Trabajo</h2>
     </div>
 
-    <div id="div_new_search" class="hidden">
+    <div id="div_new_search" class="hidden" style="margin-bottom: 1em">
         <div class="pure-control-group">
             <button id="btn_new_search" class="pure-button">
                 <i class="sprite icon Search"></i>
@@ -45,6 +45,41 @@
         <h1>Registro de Pasos</h1>
         <h2>Paso 2: Captura de fotos</h2>
     </div>
+
+
+    <div>
+        <span>Tr&aacute;fico: <label style="display: inline;" class="selected" id="lbl_trafico"></label></span>
+    </div>
+    <div>
+        <span>Referencia: <label style="display: inline;" class="selected" id="lbl_referencia"></label></span>
+    </div>
+
+    <div class="pure-controls">
+        <button id="btn_Photo" class="pure-button">
+            <i class="sprite icon Camera"></i>
+            &nbsp;Tomar foto
+        </button>
+    </div>
+
+    <div id="div_foto" class="pure-g" style="margin-top: .5em">
+        <img id="img_foto" width="25%" class="hidden">
+    </div>
+
+    <div id="div_pasos">
+        <div class="pure-g">
+            <div class="pure-u-1-3"><p># Paso</p></div>
+            <div class="pure-u-1-3"><p>Imagen</p></div>
+            <div class="pure-u-1-3"><p>Descripci&oacute;n</p></div>
+        </div>
+    </div>
+
+    <div class="pure-controls">
+        <button id="btn_save" class="pure-button">
+            <i class="sprite icon Save"></i>
+            &nbsp;Guardar
+        </button>
+    </div>
+
 </div>
 
 <footer>
