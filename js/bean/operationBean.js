@@ -1,3 +1,23 @@
+/**Orden de trabajo */
+var Bean_orden_trabajo = function(id, folio, referencia, fecha) {
+    this.Id = id;
+    this.Folio = folio;
+    this.Referencia = referencia;
+    this.Fecha = fecha;
+    this.PLstOTSer;
+}
+
+var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, piezas, ref1, ref2) {
+    this.Id = id;
+    this.Id_orden_trabajo = id_orden_trabajo;
+    this.Id_servicio = id_servicio;
+    this.Piezas = piezas;
+    this.Ref1 = ref1;
+    this.Ref2 = ref2;
+    this.PEntLiv;
+}
+
+
 /**Entrada Auditoria Mercancia */
 var BeanEntrada_liverpool = function (id, id_entrada, proveedor, trafico, pedido, piezas, fecha_confirma, piezas_maq, fecha_maquila, num_pasos) {
     this.Id = id;

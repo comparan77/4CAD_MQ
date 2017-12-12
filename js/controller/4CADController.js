@@ -8,8 +8,10 @@ var CADController = function() {
                 obj = new Login();
             } else if (type === "inicio") {
                 obj = new Inicio();
-            } else if (type === "carcod") {
-                obj = new CarcodController();
+            } else if (type === "desord") {
+                obj = new DesOrdController();
+            } else if (type === "regpas") {
+                obj = new RegPasController();
             } else if (type === "capmaq") {
                 obj = new CapmaqController();
             } else if (type === "desmaq") {
@@ -19,6 +21,7 @@ var CADController = function() {
                 async: true,
                 callback: function() { 
                     try {
+                        console.log('tipo: ' + type);
                         x$('#div_' + type).html(this.responseText);
                         obj.Init();    
                     } catch (error) {

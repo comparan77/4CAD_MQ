@@ -1,7 +1,7 @@
 function OperationModel() {}
 
-OperationModel.carga_pedidos_Liverpool = function(callback) {
-    var url = urlHandler + 'handlers/CAEApp.ashx?op=entrada_liverpool&opt=getCodigosPendientes';
+OperationModel.carga_ordenes_trabajo = function(callback) {
+    var url = urlHandler + 'handlers/CAEApp.ashx?op=orden_trabajo&opt=getOrdenes';
     try {
         Common.fetchJSONFile(
             url, 
