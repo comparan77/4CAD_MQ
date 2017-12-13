@@ -9,11 +9,13 @@
         this.arrStepValid = null;
         this.lnkAnt = null;
         this.lnkSig = null;
-
+        
         // Define option defaults
         var defaults = {
             content: '',
-            maxStep: 1
+            maxStep: 1,
+            arrCallBackAnt: [],
+            arrCallBackSig: []
         }
 
         // Create options by extending defaults with the passed in arugments
@@ -34,6 +36,11 @@
     Wizard.prototype.setStepValid = function(step) {
 		if(this.arrStepValid.indexOf(step)<0)
 			this.arrStepValid.push(step);
+    }
+
+    Wizard.prototype.remStepValid = function(step) {
+        var idx = this.arrStepValid.indexOf(step);
+        this.arrStepValid.splice(idx, 0);
     }
     
     Wizard.prototype.enabledBtnNext = function() {
@@ -114,6 +121,8 @@
                     if(_.stepNum == _.options.maxStep) {
                         _.lnkSig.innerHTML = 'FIN';
                     }    
+                    if(_.options.arrCallBackSig[_.stepNum - 1]) 
+                    _.options.arrCallBackSig[_.stepNum - 1]();
                 } catch (error) {
                     console.log(error.message);
                 }
@@ -127,6 +136,8 @@
                     if(_.stepNum == 1)
                         _.hideBtnPrev();
                     _.enabledBtnNext();    
+                    if(_.options.arrCallBackAnt[_.stepNum - 1]) 
+                        _.options.arrCallBackAnt[_.stepNum - 1]();
                 } catch (error) {
                     console.log(error.message);
                 }

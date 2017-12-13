@@ -26,20 +26,16 @@ var RegPasController = function() {
 				content: 'wizard_1',
 				maxStep: 2
 			});
-			wizard1.open();	
 
+			wizard1.open();	
 			btn_search_orden_click();
+			btn_new_search_click();
+			btn_Photo_click();
+			btn_save_click();
 		} catch (error) {
 			console.log('error wizard: ' + error.message);
 		}
-		
-		btn_new_search_click();
-		
-		btn_Photo_click();
-
-		btn_save_click();
-
-		alert(arrExistentes[0].PLstOTSer[0].PLstPasos[0].Id_servicio);
+		//alert(arrExistentes[0].PLstOTSer[0].PLstPasos[0].Id_servicio);
 	}
 
 	function btn_save_click() {
@@ -240,7 +236,7 @@ var RegPasController = function() {
 					fillTblServ(ordenFinded[0].PLstOTSer);
 				}
 				else {
-					alert('adios');
+					Common.notificationAlert('El la orden no ha sido encontrada', 'info', 'ok');
 				}
 				Common.setEstatusBtn('btn_search_orden', '<i class="sprite icon Search"></i>Buscar Orden', false);
 			} catch (error) {
