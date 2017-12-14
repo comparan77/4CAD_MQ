@@ -65,6 +65,9 @@ var CapmaqController = function() {
 				x$('#lnkSerSel_' + data[x].Id).on('click', function(){
 					try {
 
+						wizard1.remStepValid(1);
+						wizard1.disabledBtnNext();
+
 						var lbl_trafico = document.getElementById('lbl_trafico');
 						var lbl_referencia = document.getElementById('lbl_referencia');
 						var lbl_no_pasos = document.getElementById('lbl_no_pasos');
@@ -88,7 +91,7 @@ var CapmaqController = function() {
 							lbl_referencia.innerHTML = serSelected[0].Ref2;
 							lbl_no_pasos.innerHTML = serSelected[0].PLstPasos.length;
 							lbl_piezas_sol.innerHTML = serSelected[0].Piezas;
-
+							//console.log(serSelected[0].PLstMaq[0].Fecha);
 						} else {
 							Common.notificationAlert('Es necesario realizar el registro de pasos para el servicio seleccionado', 'info', 'ok');
 						}
@@ -141,7 +144,7 @@ var CapmaqController = function() {
 			try {
 				var d = new Date();
 
-				var objMaq = new Bean_orden_trabajo_ser_maq (
+				var objMaq = new Bean_maquila (
 					0,
 					serSelected[0].Id,
 					d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(),
@@ -154,7 +157,7 @@ var CapmaqController = function() {
 
 				Common.setEstatusBtn('btn_save', 'Guardando maquila ...', true);
 				Common.notificationAlert('La maquila ha sido guardada correctamente.', 'Info', 'Ok');
-				localStorage.setItem('pedidos', JSON.stringify(arrExistentes));
+				localStorage.setItem('ordenes', JSON.stringify(arrExistentes));
 				clear_form();
 			} catch (error) {
 				Common.notificationAlert(error.message, 'Error', 'Ok');

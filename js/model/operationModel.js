@@ -15,8 +15,8 @@ OperationModel.carga_ordenes_trabajo = function(callback) {
     }
 }
 
-OperationModel.carga_maquila_Liverpool = function(obj, callback) {
-    var url = urlHandler + 'handlers/CAEApp.ashx?op=entrada_liverpool&opt=subirMaquila';
+OperationModel.maquila_addLst = function(obj, callback) {
+    var url = urlHandler + 'handlers/CAEApp.ashx?op=maquila&opt=addLst';
     try {
         Common.fetchJSONFile(
             url, 

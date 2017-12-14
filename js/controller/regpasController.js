@@ -104,10 +104,11 @@ var RegPasController = function() {
 					vPaso++;
 					appendPaso(txtPromt);
 					if(vPaso>0) {
-						var oOrdSerPas = new Bean_orden_trabajo_servicio_paso(
-							ordenFinded[0].Id,
+						var oOrdSerPas = new Bean_maquila_paso(
+							0,
 							serSelected[0].Id,
-							ImgPaso64
+							ImgPaso64,
+							txtPromt
 						);
 						serSelected[0].PLstPasos.push(oOrdSerPas);
 					}

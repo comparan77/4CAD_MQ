@@ -4,7 +4,7 @@ var Bean_orden_trabajo = function(id, folio, referencia, fecha) {
     this.Folio = folio;
     this.Referencia = referencia;
     this.Fecha = fecha;
-    this.PLstOTSer;
+    this.PLstOTSer = [];
 }
 
 var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, piezas, ref1, ref2) {
@@ -19,19 +19,20 @@ var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, pi
     this.PLstPasos = [];
 }
 
-var Bean_orden_trabajo_servicio_paso = function(id_orden_trabajo, id_servicio, foto64) {
-    this.Id_orden_trabajo = id_orden_trabajo;
-    this.Id_servicio = id_servicio;
+var Bean_maquila_paso = function(id, id_ord_tbj_srv, foto64, descripcion) {
+    this.Id = id;
+    this.Id_ord_tbj_srv = id_ord_tbj_srv;
     this.Foto64 = foto64;
+    this.Descripcion = descripcion;
 }
 
-var Bean_orden_trabajo_ser_maq = function(id, id_servicio, id_ord_tbj_srv, fecha, piezas, capturada) {
+var Bean_maquila = function(id, id_ord_tbj_srv, fecha, piezas, capturada) {
     this.Id = id;
-    this.Id_servicio = id_servicio;
     this.Id_ord_tbj_srv = id_ord_tbj_srv;
     this.Fecha = fecha;
     this.Piezas = piezas;
     this.Capturada = capturada;
+    this.PLstPasos = [];
 }
 
 /**Entrada Auditoria Mercancia */
