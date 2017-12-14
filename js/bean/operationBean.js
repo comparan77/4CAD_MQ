@@ -15,6 +15,7 @@ var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, pi
     this.Ref1 = ref1;
     this.Ref2 = ref2;
     this.PEntLiv;
+    this.PLstMaq = [];
     this.PLstPasos = [];
 }
 
@@ -22,6 +23,14 @@ var Bean_orden_trabajo_servicio_paso = function(id_orden_trabajo, id_servicio, f
     this.Id_orden_trabajo = id_orden_trabajo;
     this.Id_servicio = id_servicio;
     this.Foto64 = foto64;
+}
+
+var Bean_orden_trabajo_ser_maq = function(id, id_servicio, id_ord_tbj_srv, fecha, piezas) {
+    this.Id = id;
+    this.Id_servicio = id_servicio;
+    this.Id_ord_tbj_srv = id_ord_tbj_srv;
+    this.Fecha = fecha;
+    this.Piezas = piezas;
 }
 
 /**Entrada Auditoria Mercancia */

@@ -138,14 +138,17 @@ var CapmaqController = function() {
 	function btn_save_click() {
 		x$('#btn_save').on('click', function() { 
 			try {
-				var piezasMqHoy = String(x$('#txt_pieza_maq').attr('value')) * 1;
-				pedidoFinded[0].Piezas_maquiladas_hoy = piezasMqHoy;
-
 				var d = new Date();
-				pedidoFinded[0].Fecha_maquila = d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
 
-				var num_pasos = String(x$('#txt_num_pasos').attr('value')) * 1;
-				pedidoFinded[0].Num_pasos = num_pasos;
+				var objMaq = new Bean_orden_trabajo_ser_maq (
+					0,
+					serSelected[0].Id,
+					d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(),
+					String(x$('#txt_pieza_maq').attr('value')) * 1
+				);
+
+				serSelected[0].PLstMaq = [];
+				serSelected[0].PLstMaq.push(objMaq);
 
 				Common.setEstatusBtn('btn_save', 'Guardando maquila ...', true);
 				Common.notificationAlert('La maquila ha sido guardada correctamente.', 'Info', 'Ok');
