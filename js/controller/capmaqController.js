@@ -66,9 +66,13 @@ var CapmaqController = function() {
 
 						var lbl_trafico = document.getElementById('lbl_trafico');
 						var lbl_referencia = document.getElementById('lbl_referencia');
+						var lbl_no_pasos = document.getElementById('lbl_no_pasos');
+						var lbl_piezas_sol = document.getElementById('lbl_piezas_sol');
 
 						lbl_trafico.innerHTML = '';
 						lbl_referencia.innerHTML = '';
+						lbl_no_pasos.innerHTML = '';
+						lbl_piezas_sol.innerHTML = '';
 
 						var v_idServ = String(x$(this).attr('id')).split('_')[1] * 1;
 						serSelected = ordenFinded[0].PLstOTSer.filter(function (obj) {
@@ -81,7 +85,12 @@ var CapmaqController = function() {
 
 							lbl_trafico.innerHTML = serSelected[0].Ref1;
 							lbl_referencia.innerHTML = serSelected[0].Ref2;
-						} 
+							lbl_no_pasos.innerHTML = serSelected[0].PLstPasos.length;
+							lbl_piezas_sol.innerHTML = serSelected[0].Piezas;
+
+						} else {
+							Common.notificationAlert('Es necesario realizar el registro de pasos para el servicio seleccionado', 'info', 'ok');
+						}
 
 					} catch (error) {
 						console.log(error.message);						
