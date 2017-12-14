@@ -25,12 +25,13 @@ var Bean_orden_trabajo_servicio_paso = function(id_orden_trabajo, id_servicio, f
     this.Foto64 = foto64;
 }
 
-var Bean_orden_trabajo_ser_maq = function(id, id_servicio, id_ord_tbj_srv, fecha, piezas) {
+var Bean_orden_trabajo_ser_maq = function(id, id_servicio, id_ord_tbj_srv, fecha, piezas, capturada) {
     this.Id = id;
     this.Id_servicio = id_servicio;
     this.Id_ord_tbj_srv = id_ord_tbj_srv;
     this.Fecha = fecha;
     this.Piezas = piezas;
+    this.Capturada = capturada;
 }
 
 /**Entrada Auditoria Mercancia */

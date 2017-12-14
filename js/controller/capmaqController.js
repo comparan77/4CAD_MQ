@@ -17,7 +17,7 @@ var CapmaqController = function() {
 
 	function init_controls() {
 		wizard1 = new Wizard({
-			content: 'wizard_1',
+			content: 'wizard_2',
 			maxStep: 2,
 			arrCallBackAnt: [
 				disabledStep1
@@ -27,6 +27,7 @@ var CapmaqController = function() {
 		wizard1.open();	
 		btn_search_orden_click();
 		btn_new_search_click();
+		btn_save_maquila_click();
 	}
 
 	function disabledStep1() {
@@ -135,8 +136,8 @@ var CapmaqController = function() {
 		});
 	}
 
-	function btn_save_click() {
-		x$('#btn_save').on('click', function() { 
+	function btn_save_maquila_click() {
+		x$('#btn_save_maquila').on('click', function() { 
 			try {
 				var d = new Date();
 
@@ -144,7 +145,8 @@ var CapmaqController = function() {
 					0,
 					serSelected[0].Id,
 					d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(),
-					String(x$('#txt_pieza_maq').attr('value')) * 1
+					String(x$('#txt_pieza_maq').attr('value')) * 1,
+					false
 				);
 
 				serSelected[0].PLstMaq = [];
