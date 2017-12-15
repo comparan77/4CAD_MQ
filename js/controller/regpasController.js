@@ -126,7 +126,7 @@ var RegPasController = function() {
 			img.setAttribute('src', imageData);
 			getFileContentAsBase64(imageData,function(base64Image) {
 				//console.log(base64Image); 
-				ImgPaso64 = base64Image;
+				ImgPaso64 = base64Image.replace('data:image/jpeg;base64,','');
 			});
 			Common.notificationPrompt(
 				'Descripción del paso',

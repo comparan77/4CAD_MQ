@@ -9,9 +9,15 @@ var DesmaqController = function() {
 	function subir_maquila() {
 		try {
 			OperationModel.maquila_addLst(arrXguardar, function(data) { 
-				Common.notificationAlert('Se subieron las capturas de maquila correctamente.', 'Info', 'Ok');
-				localStorage.clear();
-				oCADController.Create('desmaq');
+				if(isNaN(data)) {
+					Common.notificationAlert(data, 'Error', 'ok');
+					Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
+				}
+				else {
+					Common.notificationAlert('Se subieron ' + data + ' capturas correctamente.', 'Info', 'Ok');
+					localStorage.clear();
+					oCADController.Create('desmaq');
+				}
 			});
 		} catch (error) {
 			Common.notificationAlert(error.message, 'Error', 'Ok');
@@ -30,7 +36,6 @@ var DesmaqController = function() {
 			
 			for(var a in arrExistentes) {
 				var objOT = arrExistentes[a];
-				console.log('MAQUILADOS: ' + objOT.PLstOTSer[0].PLstMaq.length);
 				var arrOTSer = objOT.PLstOTSer.filter(function (obj) {
 					return obj.PLstMaq != undefined && obj.PLstMaq.length > 0;
 				});
