@@ -107,7 +107,7 @@ var DesmaqController = function() {
 		tbody_maquiladas = document.getElementById('tbody_maquiladas');		
 		fillMaquilaCapturada();
 		init_controls();
-	} 
+	}
 	
 	function init_controls() {
 		x$('#btn_upload').on('click', function() {
