@@ -4,9 +4,11 @@
     this.DataTable = function() {
 
         // Create global element references
-        this.theader = null;
+        this.table = null;
+        this.thead = null;
         this.tbody = null;
-        this.tfooter = null;
+        this.tfoot = null;
+        this.arrMapCols = [];
         
         // Define option defaults
         var defaults = {
@@ -24,8 +26,59 @@
     }
 
     function buildOut() { 
-        var content = document.getElementById(this.options.Id);
-        var columns = content.children();
+
+        this.table = document.getElementById('tbl_' + this.options.Id);
+        if(this.table!=null) {
+        	document.getElementById(this.options.Id).removeChild(this.table);
+        }
+        this.table = document.createElement('table');
+        this.table.setAttribute('id','tbl_' + this.options.Id);
+
+        this.thead = document.createElement('thead');
+        this.tbody = document.createElement('tbody');
+
+        var numRow = 0;
+        var cellTbl = 0;
+        
+        var c = document.getElementById(this.options.Id).children;
+        var txt = "";
+        var i;
+        
+        this.arrMapCols = [];
+        
+        for (i = 0; i < c.length; i++) {
+            var div = c[i];
+            if(div.attributes.id != undefined)
+            switch(div.attributes.id.value) {
+                case 'columns':
+                    var columns = document.getElementById('columns').children;
+                    var row = this.thead.insertRow(numRow);
+                    for(var col = 0; col < columns.length; col ++) {
+                        var column = columns[col];
+                        var cellh = document.createElement('th');
+                        cellh.innerHTML = column.attributes.getNamedItem('headertext').value;
+                        row.appendChild(cellh);
+                        var oMapCol = new MapCol(col, column.attributes.getNamedItem('datafield').value);
+                        this.arrMapCols.push(oMapCol);
+                        cellTbl++;
+                    }
+                    for(var idx = 0; idx < this.source.length; idx ++) {
+                    	row = this.tbody.insertRow(numRow);
+                        var objJson = this.source[idx];
+                        for(cx = 0; cx < this.arrMapCols.length; cx ++) {
+                        	var v_map_col = this.arrMapCols[cx];
+                        	var cellData = row.insertCell(v_map_col.Idx);
+                            cellData.innerHTML = objJson[v_map_col.Name];
+                        }
+                        numRow++;
+                    }
+                    break;
+            }
+        }
+        this.table.appendChild(this.thead);
+        this.table.appendChild(this.tbody);
+
+        document.getElementById(this.options.Id).appendChild(this.table);
     }
 
 //     <div id="grd">
@@ -37,68 +90,9 @@
 // <div id="content"></div>
 // </div>
 
-    var jon = '[{"Id":1, "Folio":"OT-001-17", "Piezas":50}, {"Id":2, "Folio":"OT-002-17", "Piezas":808}]';
-
-    var json = JSON.parse(jon);
-
-    var arrMapCols = [];
-
     var MapCol = function(idx, name) {
     this.Idx = idx;
     this.Name = name;
-    }
-
-    function myFunction() {
-            
-        var tbl = document.createElement('table');
-        var tblH = document.createElement('thead');
-        var tblb = document.createElement('tbody');
-        var numRow = 0;
-        var cellTbl = 0;
-        
-        var c = document.getElementById('grd').children;
-        var txt = "";
-        var i;
-        
-        arrMapCols = [];
-        
-        document.getElementById('content').innerHTML = '';
-        
-        for (i = 0; i < c.length; i++) {
-            var div = c[i];
-            if(div.attributes.id != undefined)
-            switch(div.attributes.id.value) {
-                case 'columns':
-                    var columns = document.getElementById('columns').children;
-                    var row = tblH.insertRow(numRow);
-                    for(var col = 0; col < columns.length; col ++) {
-                        var column = columns[col];
-                        var cellh = document.createElement('th');
-                        cellh.innerHTML = column.attributes.getNamedItem('headertext').value;
-                        row.appendChild(cellh);
-                        var oMapCol = new MapCol(col, column.attributes.getNamedItem('datafield').value);
-                        arrMapCols.push(oMapCol);
-                        cellTbl++;
-                    }
-                    for(var idx = 0; idx < json.length; idx ++) {
-                    	row = tblb.insertRow(numRow);
-                        var objJson = json[idx];
-                        console.log(objJson);
-                        for(cx = 0; cx < arrMapCols.length; cx ++) {
-                        	var v_map_col = arrMapCols[cx];
-                        	var cellData = row.insertCell(v_map_col.Idx);
-                            cellData.innerHTML = objJson[v_map_col.Name];
-                        }
-                        numRow++;
-                    }
-                    break;
-            }
-            //txt = txt + c[i].getAttribute('id') + "<br>";
-        }
-        tbl.appendChild(tblH);
-        tbl.appendChild(tblb);
-
-        document.getElementById('content').appendChild(tbl);
     }
 
 }());
