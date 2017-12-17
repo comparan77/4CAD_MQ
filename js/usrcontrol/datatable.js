@@ -9,11 +9,15 @@
         this.tbody = null;
         this.tfoot = null;
         this.arrMapCols = [];
+        this.numRow = null;
+        
         
         // Define option defaults
         var defaults = {
             Id: '',
-            CssClass: '',
+            CssClass: 'pure-table',
+            Style = 'table-layout: fixed; word-wrap: break-word;',
+            Width = '95%',
             source: null,
             AutoGenerateColumns: false
         }
@@ -23,6 +27,14 @@
             this.options = extendDefaults(defaults, arguments[0]);
         }
 
+    }
+
+    // Public methods
+    Wizard.prototype.open = function() {
+        // open code goes here
+        buildOut.call(this);
+
+        //initializeEvents.call(this);
     }
 
     function buildOut() { 
@@ -37,7 +49,7 @@
         this.thead = document.createElement('thead');
         this.tbody = document.createElement('tbody');
 
-        var numRow = 0;
+        this.numRow = 0;
         var cellTbl = 0;
         
         var c = document.getElementById(this.options.Id).children;
@@ -52,7 +64,7 @@
             switch(div.attributes.id.value) {
                 case 'columns':
                     var columns = document.getElementById('columns').children;
-                    var row = this.thead.insertRow(numRow);
+                    var row = this.thead.insertRow(this.numRow);
                     for(var col = 0; col < columns.length; col ++) {
                         var column = columns[col];
                         var cellh = document.createElement('th');
@@ -62,16 +74,6 @@
                         this.arrMapCols.push(oMapCol);
                         cellTbl++;
                     }
-                    for(var idx = 0; idx < this.source.length; idx ++) {
-                    	row = this.tbody.insertRow(numRow);
-                        var objJson = this.source[idx];
-                        for(cx = 0; cx < this.arrMapCols.length; cx ++) {
-                        	var v_map_col = this.arrMapCols[cx];
-                        	var cellData = row.insertCell(v_map_col.Idx);
-                            cellData.innerHTML = objJson[v_map_col.Name];
-                        }
-                        numRow++;
-                    }
                     break;
             }
         }
@@ -79,6 +81,23 @@
         this.table.appendChild(this.tbody);
 
         document.getElementById(this.options.Id).appendChild(this.table);
+    }
+
+    DataTable.prototype.DataBind = function() {
+        while (this.tbody.firstChild) {
+            this.tbody.removeChild(this.tbody.firstChild);
+        }
+        this.numRow = 0;
+        for(var idx = 0; idx < this.source.length; idx ++) {
+            row = this.tbody.insertRow(this.numRow);
+            var objJson = this.source[idx];
+            for(cx = 0; cx < this.arrMapCols.length; cx ++) {
+                var v_map_col = this.arrMapCols[cx];
+                var cellData = row.insertCell(v_map_col.Idx);
+                cellData.innerHTML = objJson[v_map_col.Name];
+            }
+            this.numRow++;
+        }
     }
 
 //     <div id="grd">
