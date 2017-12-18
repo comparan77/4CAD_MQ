@@ -1,21 +1,16 @@
 var DesOrdController = function() {
 	
 	this.Init = init;
+	var grd_ordenes;
 	
 	function cargar_ordenes() {
 		try {
-			//localStorage.clear();
 			
 			var arrExistentes = localStorage.getItem('ordenes');
-			// var arrCodMaq = [];
-			// var arrCodxMaq = [];
-			// var arrCod = [];
-			// var codMaq;
 
 			var arrOrdTbj = [];
 			localStorage.removeItem('ordenes_bak');
 			localStorage.setItem('ordenes_bak', arrExistentes);
-			// arrCodMaq = find_ordenes_maquilados(arrExistentes);
 			
 			OperationModel.carga_ordenes_trabajo(function(data) {
 				var objOrdTbj;
@@ -71,19 +66,6 @@ var DesOrdController = function() {
 				Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
 			});
 
-			// if(arrCodMaq.length>0) {
-			// 	codMaq = arrCodMaq.filter(function(obj) {
-			// 		return obj.Id == objOrdTbj.Id;
-			// 	});
-			// }
-			// if(codMaq!= undefined && codMaq.length>0) {
-			// 	objOrdTbj.Piezas_maquiladas_hoy = codMaq[0].Piezas_maquiladas_hoy;
-			// 	arrCod.push(objOrdTbj);
-			// }
-			// else{
-			// 	arrCod.push(objOrdTbj);
-			// }
-
 		} catch (error) {
 			Common.notificationAlert(error.message, 'Error', 'Ok');
 			Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);			
@@ -95,42 +77,44 @@ var DesOrdController = function() {
 		arrExistentes = localStorage.getItem('ordenes');
 		if(arrExistentes!=null && arrExistentes.length>0) {
 			arrExistentes = JSON.parse(arrExistentes);
-			var table = document.getElementById("tbody_ordenes");
-			table.innerHTML = '';
 			var v_LstOTSer;
+			var arrData = [];
+			var objOrd;
 			for(var x in arrExistentes) {
-				var row = table.insertRow(x);
-				if(x % 2 != 0)
-					row.className = "pure-table-odd";
-
-				var cellFolio = row.insertCell(0);
-				var cellFecha = row.insertCell(1);
-				var cellPrecio = row.insertCell(2);
-				var cellNOM = row.insertCell(3);
-
-				cellFolio.innerHTML = arrExistentes[x].Folio;
-				cellFolio.setAttribute('align', 'center');
-				cellFecha.innerHTML = arrExistentes[x].Fecha;
-				cellFecha.setAttribute('align', 'center');
+				var objOrd = {
+					Folio: '',
+					Fecha: '',
+					Precio: 0,
+					Nom: 0
+				};
+				objOrd.Folio = arrExistentes[x].Folio;
+				objOrd.Fecha = arrExistentes[x].Fecha.replace(/(T.*)/g, "");
 
 				v_LstOTSer = arrExistentes[x].PLstOTSer;
 				
 				for(var y in v_LstOTSer) {
 					switch (v_LstOTSer[y].Id_servicio) {
 						case 1:
-							cellPrecio.innerHTML = v_LstOTSer[y].Piezas;
-							cellPrecio.setAttribute('align', 'center');
+							objOrd.Precio = v_LstOTSer[y].Piezas;
 							break;
 						case 2:
-							cellNOM.innerHTML = v_LstOTSer[y].Piezas;
-							cellNOM.setAttribute('align', 'center');
+							objOrd.Nom = v_LstOTSer[y].Piezas;
 							break;
 						default:
 							break;
 					}
 				}
+				arrData.push(objOrd);
 			}
+			
+			grd_ordenes = new DataGrid({
+				'Id': 'grd_ordenes',
+				'source': arrData
+			});
+			grd_ordenes.open();
+			grd_ordenes.dataBind();
 		}
+
 	}
 
 	function find_ordenes_maquilados(codliver) {
@@ -155,8 +139,18 @@ var DesOrdController = function() {
 
 	function init_controls() {
 		x$('#btn_load').on('click', function() {
-			Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargando ordenes...', true);
-			cargar_ordenes();
+			if(grd_ordenes) 
+				grd_ordenes.clear();
+			switch (Common.checkConnection().tipo) {
+				case Connection.UNKNOWN:
+				case Connection.NONE:
+					Common.notificationAlert('Es necesario tener acceso a internet para descargar las órdenes de trabajo');
+					break;
+				default:
+					Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargando ordenes...', true);
+					cargar_ordenes();
+					break;
+			}
         });
 	}
 }

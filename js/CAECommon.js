@@ -185,3 +185,24 @@ Common.notificationBeep = function () {
 Common.notificaRegExitoso = function() {
     Common.notificationAlert('Registro Exitoso', 'Registro de Información', 'Ok');
 }
+
+/**Conectividad */
+Common.checkConnection = function() {
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Conexion desconocida';
+    states[Connection.ETHERNET] = 'Ethernet';
+    states[Connection.WIFI]     = 'WiFi';
+    states[Connection.CELL_2G]  = 'Conexion 2G';
+    states[Connection.CELL_3G]  = 'Conexion 3G';
+    states[Connection.CELL_4G]  = 'Conexion 4G';
+    states[Connection.CELL]     = 'Conexion genérica';
+    states[Connection.NONE]     = 'Sin conexión';
+
+    var result = {
+        tipo: networkState,
+        descripcion: states[networkState]
+    }
+    return result;
+}

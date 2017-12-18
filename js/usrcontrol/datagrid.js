@@ -1,7 +1,7 @@
 ;(function() {
     
     // Define constructor
-    this.DataTable = function() {
+    this.DataGrid = function() {
 
         // Create global element references
         this.table = null;
@@ -16,8 +16,8 @@
         var defaults = {
             Id: '',
             CssClass: 'pure-table',
-            Style = 'table-layout: fixed; word-wrap: break-word;',
-            Width = '95%',
+            Style: 'table-layout: fixed; word-wrap: break-word;',
+            Width: '95%',
             source: null,
             AutoGenerateColumns: false
         }
@@ -30,11 +30,15 @@
     }
 
     // Public methods
-    Wizard.prototype.open = function() {
+    DataGrid.prototype.open = function() {
         // open code goes here
         buildOut.call(this);
 
         //initializeEvents.call(this);
+    }
+
+    DataGrid.prototype.clear = function() {
+        this.table.innerHTML = '';
     }
 
     function buildOut() { 
@@ -45,6 +49,9 @@
         }
         this.table = document.createElement('table');
         this.table.setAttribute('id','tbl_' + this.options.Id);
+        this.table.setAttribute('style', this.options.Style);
+        this.table.className = this.options.CssClass;
+        this.table.setAttribute('width', this.options.Width);
 
         this.thead = document.createElement('thead');
         this.tbody = document.createElement('tbody');
@@ -83,21 +90,27 @@
         document.getElementById(this.options.Id).appendChild(this.table);
     }
 
-    DataTable.prototype.DataBind = function() {
-        while (this.tbody.firstChild) {
-            this.tbody.removeChild(this.tbody.firstChild);
-        }
-        this.numRow = 0;
-        for(var idx = 0; idx < this.source.length; idx ++) {
-            row = this.tbody.insertRow(this.numRow);
-            var objJson = this.source[idx];
-            for(cx = 0; cx < this.arrMapCols.length; cx ++) {
-                var v_map_col = this.arrMapCols[cx];
-                var cellData = row.insertCell(v_map_col.Idx);
-                cellData.innerHTML = objJson[v_map_col.Name];
+    DataGrid.prototype.dataBind = function() {
+        try {
+            while (this.tbody.firstChild) {
+                this.tbody.removeChild(this.tbody.firstChild);
             }
-            this.numRow++;
+            this.numRow = 0;
+            for(var idx = 0; idx < this.options.source.length; idx ++) {
+                row = this.tbody.insertRow(this.numRow);
+                var objJson = this.options.source[idx];
+                for(cx = 0; cx < this.arrMapCols.length; cx ++) {
+                    var v_map_col = this.arrMapCols[cx];
+                    var cellData = row.insertCell(v_map_col.Idx);
+                    cellData.innerHTML = objJson[v_map_col.Name];
+                }
+                this.numRow++;
+            }
+
+        } catch (error) {
+            console.log(error.message);
         }
+        
     }
 
 //     <div id="grd">
@@ -110,8 +123,19 @@
 // </div>
 
     var MapCol = function(idx, name) {
-    this.Idx = idx;
-    this.Name = name;
+        this.Idx = idx;
+        this.Name = name;
+    }
+
+    // Utility method to extend defaults with user options
+    function extendDefaults(source, properties) {
+        var property;
+        for (property in properties) {
+            if (properties.hasOwnProperty(property)) {
+                source[property] = properties[property];
+            }
+        }
+        return source;
     }
 
 }());
