@@ -19,6 +19,10 @@ var DesOrdController = function() {
 				var pLstOTSer;
 				var objEntLiv;
 
+				if(data.length == 0) {
+					Common.notificationAlert('No existen órdenes de trabajo en sistema', 'Info', 'Ok');
+				}
+
 				for(var x in data) {
 					arrOrdTbjSer = [];
 					objOrdTbj = new Bean_orden_trabajo(
