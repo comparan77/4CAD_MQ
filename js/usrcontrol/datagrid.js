@@ -9,6 +9,7 @@
         this.tbody = null;
         this.tfoot = null;
         this.arrMapCols = [];
+        this.arrDataKeys = [];
         this.numRow = null;
         
         
@@ -19,7 +20,9 @@
             Style: 'table-layout: fixed; word-wrap: break-word;',
             Width: '95%',
             source: null,
-            AutoGenerateColumns: false
+            AutoGenerateColumns: false,
+            DataKeyNames: [],
+            onRowCommand: ''
         }
 
         // Create options by extending defaults with the passed in arugments
@@ -39,6 +42,68 @@
 
     DataGrid.prototype.clear = function() {
         this.table.innerHTML = '';
+    }
+
+    DataGrid.prototype.dataBind = function() {
+        try {
+            while (this.tbody.firstChild) {
+                this.tbody.removeChild(this.tbody.firstChild);
+            }
+            
+            fillDataGrid();
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    function initializeEvents() {
+        var _ = this;
+        if(_.options.onRowCommand!=null && this.options.onRowCommand.length > 0) {
+
+        }
+    }
+
+    function fillDataGridWithDataKeys() {
+        this.numRow = 0;
+        var _ = this;
+        for(var idx = 0; idx < this.options.source.length; idx ++) {
+            row = this.tbody.insertRow(this.numRow);
+            var objJson = this.options.source[idx];
+            var datakeyvalue = {};
+            for(var idxDK = 0; idxDK < this.options.DataKeyNames; idxDK ++) {
+                datakeyvalue[this.options.DataKeyNames[idx]] = objJson[this.options.DataKeyNames[idx]];
+            }
+
+            var dataKeyname = {
+                numRow: _.numRow,
+                value: datakeyvalue
+            };
+
+            row.setAttribute("Id", "rowkey_" + this.numRow);
+
+            for(cx = 0; cx < this.arrMapCols.length; cx ++) {
+                var v_map_col = this.arrMapCols[cx];
+                var cellData = row.insertCell(v_map_col.Idx);
+                cellData.innerHTML = objJson[v_map_col.Name];
+            }
+            this.numRow++;
+        }
+    }
+
+    function fillDataGrid() {
+        this.numRow = 0;
+        for(var idx = 0; idx < this.options.source.length; idx ++) {
+            row = this.tbody.insertRow(this.numRow);
+            var objJson = this.options.source[idx];
+            for(cx = 0; cx < this.arrMapCols.length; cx ++) {
+                var v_map_col = this.arrMapCols[cx];
+                var cellData = row.insertCell(v_map_col.Idx);
+                cellData.innerHTML = objJson[v_map_col.Name];
+                cellData.setAttribute('type', objJson[v_map_col.Type]);
+            }
+            this.numRow++;
+        }
     }
 
     function buildOut() { 
@@ -77,7 +142,13 @@
                         var cellh = document.createElement('th');
                         cellh.innerHTML = column.attributes.getNamedItem('headertext').value;
                         row.appendChild(cellh);
-                        var oMapCol = new MapCol(col, column.attributes.getNamedItem('datafield').value);
+
+                        var oMapCol = new MapCol(
+                            col, 
+                            column.attributes.getNamedItem('datafield').value, 
+                            column.attributes.getNamedItem('type').value
+                        );
+
                         this.arrMapCols.push(oMapCol);
                         cellTbl++;
                     }
@@ -90,29 +161,6 @@
         document.getElementById(this.options.Id).appendChild(this.table);
     }
 
-    DataGrid.prototype.dataBind = function() {
-        try {
-            while (this.tbody.firstChild) {
-                this.tbody.removeChild(this.tbody.firstChild);
-            }
-            this.numRow = 0;
-            for(var idx = 0; idx < this.options.source.length; idx ++) {
-                row = this.tbody.insertRow(this.numRow);
-                var objJson = this.options.source[idx];
-                for(cx = 0; cx < this.arrMapCols.length; cx ++) {
-                    var v_map_col = this.arrMapCols[cx];
-                    var cellData = row.insertCell(v_map_col.Idx);
-                    cellData.innerHTML = objJson[v_map_col.Name];
-                }
-                this.numRow++;
-            }
-
-        } catch (error) {
-            console.log(error.message);
-        }
-        
-    }
-
 //     <div id="grd">
 // <div id="columns">
 // <div datafield="Id" headertext="ID"></div>
@@ -122,9 +170,15 @@
 // <div id="content"></div>
 // </div>
 
-    var MapCol = function(idx, name) {
+    var MapCol = function(idx, name, type) {
         this.Idx = idx;
         this.Name = name;
+        this.Type = type;
+    }
+
+    var MapDataKeys = function(numRow, dataKey) {
+        this.NumRow = numRow;
+        this.DataKey = dataKey;
     }
 
     // Utility method to extend defaults with user options
