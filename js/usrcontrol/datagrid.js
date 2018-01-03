@@ -22,7 +22,8 @@
             source: null,
             AutoGenerateColumns: false,
             DataKeyNames: [],
-            onRowCommand: ''
+            onRowCommand: '',
+            callBackRowCommand: null
         }
 
         // Create options by extending defaults with the passed in arugments
@@ -49,8 +50,20 @@
             while (this.tbody.firstChild) {
                 this.tbody.removeChild(this.tbody.firstChild);
             }
-            
-            fillDataGrid();
+
+            if(this.options.DataKeyNames == null)
+                this.options.DataKeyNames = [];
+
+            if(this.options.onRowCommand == null)
+            this.options.onRowCommand = '';
+
+            if(this.options.DataKeyNames.length > 0 && this.options.onRowCommand.length > 0) {
+                fillDataGridWithDataKeys.call(this);
+                initializeEvents.call(this);
+            }
+            else {
+                fillDataGrid.call(this);    
+            }
 
         } catch (error) {
             console.log(error.message);
@@ -59,8 +72,20 @@
 
     function initializeEvents() {
         var _ = this;
-        if(_.options.onRowCommand!=null && this.options.onRowCommand.length > 0) {
-
+        var rows = _.table.rows;
+        var cellsOfRow;
+        for (var r = 1; r < rows.length; r ++) {
+            cellsOfRow = rows[r].getElementByTagName('td');
+            for(var c = 0; c < cellsOfRow.length; c ++) {
+                if(cellsOfRow[c].getAttribute('type') == 'ButtonField')
+                    cellsOfRow[c].addEventListener('click', function() {
+                        var args = {
+                            commandArgument: _.arrDataKeys[r].value
+                            ,commandName: cellsOfRow[c].getAttribute('CommandName')
+                        };
+                        if(_.options.callBackRowCommand) _.options.callBackRowCommand(args);
+                    });
+            }
         }
     }
 
@@ -81,11 +106,14 @@
             };
 
             row.setAttribute("Id", "rowkey_" + this.numRow);
+            arrDataKeys.push(dataKeyname);
 
             for(cx = 0; cx < this.arrMapCols.length; cx ++) {
                 var v_map_col = this.arrMapCols[cx];
                 var cellData = row.insertCell(v_map_col.Idx);
-                cellData.innerHTML = objJson[v_map_col.Name];
+                cellData.innerHTML = objJson[v_map_col.DataField];
+                cellData.setAttribute('type', objJson[v_map_col.Type]);
+                cellData.setAttribute('CommandName', objJson[v_map_col.CommandName]);
             }
             this.numRow++;
         }
@@ -96,11 +124,11 @@
         for(var idx = 0; idx < this.options.source.length; idx ++) {
             row = this.tbody.insertRow(this.numRow);
             var objJson = this.options.source[idx];
+            
             for(cx = 0; cx < this.arrMapCols.length; cx ++) {
                 var v_map_col = this.arrMapCols[cx];
                 var cellData = row.insertCell(v_map_col.Idx);
-                cellData.innerHTML = objJson[v_map_col.Name];
-                cellData.setAttribute('type', objJson[v_map_col.Type]);
+                cellData.innerHTML = objJson[v_map_col.DataField];
             }
             this.numRow++;
         }
@@ -145,8 +173,9 @@
 
                         var oMapCol = new MapCol(
                             col, 
+                            column.attributes.getNamedItem('type').value,
                             column.attributes.getNamedItem('datafield').value, 
-                            column.attributes.getNamedItem('type').value
+                            column.hasAttribute('commandName') ? column.attributes.getNamedItem('commandName').value: null
                         );
 
                         this.arrMapCols.push(oMapCol);
@@ -161,24 +190,20 @@
         document.getElementById(this.options.Id).appendChild(this.table);
     }
 
-//     <div id="grd">
-// <div id="columns">
-// <div datafield="Id" headertext="ID"></div>
-// <div datafield="Folio" headertext="Folio"></div>
-// <div datafield="Piezas" headertext="Piezas"></div>
-// </div>
-// <div id="content"></div>
-// </div>
+    /* <div id="grd_maquila">
+        <div id="columns">
+            <div type="Boundfield" datafield="folio" headertext="Folio"></div>
+            <div type="Boundfield" datafield="servicio" headertext="Serv."></div>
+            <div type="Boundfield" datafield="pasos" headertext="Pasos"></div>
+            <div type="ButtonField" commandName="lnkPiezas" datafield="piezas" headertext="Pza(s)"></div>
+        </div>
+    </div> */
 
-    var MapCol = function(idx, name, type) {
+    var MapCol = function(idx, type, datafield, commandName) {
         this.Idx = idx;
-        this.Name = name;
         this.Type = type;
-    }
-
-    var MapDataKeys = function(numRow, dataKey) {
-        this.NumRow = numRow;
-        this.DataKey = dataKey;
+        this.DataField = datafield;
+        this.CommandName = commandName;
     }
 
     // Utility method to extend defaults with user options

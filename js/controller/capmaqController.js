@@ -143,15 +143,13 @@ var CapmaqController = function() {
 		x$('#btn_save_maquila').on('click', function() { 
 			try {
 				var d = new Date();
-
 				var objMaq = new Bean_maquila (
 					0,
 					serSelected[0].Id,
-					d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(),
+					d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(),
 					String(x$('#txt_pieza_maq').attr('value')) * 1,
 					false
 				);
-
 				serSelected[0].PLstMaq = [];
 				serSelected[0].PLstMaq.push(objMaq);
 

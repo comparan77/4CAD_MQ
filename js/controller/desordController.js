@@ -93,7 +93,6 @@ var DesOrdController = function() {
 				};
 				objOrd.Folio = arrExistentes[x].Folio;
 				objOrd.Fecha = arrExistentes[x].Fecha.replace(/(T.*)/g, "");
-
 				v_LstOTSer = arrExistentes[x].PLstOTSer;
 				
 				for(var y in v_LstOTSer) {
@@ -110,13 +109,17 @@ var DesOrdController = function() {
 				}
 				arrData.push(objOrd);
 			}
+			try {
+				grd_ordenes = new DataGrid({
+					Id: 'grd_ordenes',
+					source: arrData
+				});
+				grd_ordenes.open();
+				grd_ordenes.dataBind();	
+			} catch (error) {
+				console.log(error.message);
+			}
 			
-			grd_ordenes = new DataGrid({
-				'Id': 'grd_ordenes',
-				'source': arrData
-			});
-			grd_ordenes.open();
-			grd_ordenes.dataBind();
 		}
 
 	}
