@@ -7,10 +7,11 @@ var Bean_orden_trabajo = function(id, folio, referencia, fecha) {
     this.PLstOTSer = [];
 }
 
-var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, piezas, ref1, ref2) {
+var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, id_etiqueta_tipo, piezas, ref1, ref2) {
     this.Id = id;
     this.Id_orden_trabajo = id_orden_trabajo;
     this.Id_servicio = id_servicio;
+    this.Id_etiqueta_tipo = id_etiqueta_tipo;
     this.Piezas = piezas;
     this.Ref1 = ref1;
     this.Ref2 = ref2;

@@ -37,6 +37,7 @@ var DesOrdController = function() {
 							pLstOTSer[y].Id,
 							pLstOTSer[y].Id_orden_trabajo,
 							pLstOTSer[y].Id_servicio,
+							pLstOTSer[y].Id_etiqueta_tipo,
 							pLstOTSer[y].Piezas,
 							pLstOTSer[y].Ref1,
 							pLstOTSer[y].Ref2
