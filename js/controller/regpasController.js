@@ -192,9 +192,11 @@ var RegPasController = function() {
 
 						var lbl_trafico = document.getElementById('lbl_trafico');
 						var lbl_referencia = document.getElementById('lbl_referencia');
+						var lbl_etiqueta_tipo = document.getElementById('lbl_etiqueta_tipo');
 
 						lbl_trafico.innerHTML = '';
 						lbl_referencia.innerHTML = '';
+						lbl_etiqueta_tipo.innerHTML = '';
 
 						var v_idServ = String(x$(this).attr('id')).split('_')[1] * 1;
 						serSelected = ordenFinded[0].PLstOTSer.filter(function (obj) {
@@ -208,6 +210,7 @@ var RegPasController = function() {
 
 						lbl_trafico.innerHTML = serSelected[0].Ref1;
 						lbl_referencia.innerHTML = serSelected[0].Ref2;
+						lbl_etiqueta_tipo.innerHTML = serSelected[0].PEtiquetaTipo.Nombre;
 
 					} catch (error) {
 						console.log(error.message);						

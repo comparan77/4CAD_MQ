@@ -18,6 +18,12 @@ var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, id
     this.PEntLiv;
     this.PLstMaq = [];
     this.PLstPasos = [];
+    this.PEtiquetaTipo;
+}
+
+var Bean_etiqueta_tipo = function(id, nombre) {
+    this.Id = id;
+    this.Nombre = nombre;
 }
 
 var Bean_maquila_paso = function(id, id_ord_tbj_srv, foto64, descripcion) {

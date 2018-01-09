@@ -42,6 +42,7 @@ var DesOrdController = function() {
 							pLstOTSer[y].Ref1,
 							pLstOTSer[y].Ref2
 						);
+						objOrdTbjSer.PEtiquetaTipo = pLstOTSer[x].PEtiquetaTipo;
 						if(objOrdTbjSer.Id_orden_servicio == 1) {
 							objEntLiv = new BeanEntrada_liverpool(
 								pLstOTSer[x].PEntLiv.Id,
