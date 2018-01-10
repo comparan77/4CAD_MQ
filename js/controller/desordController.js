@@ -39,10 +39,12 @@ var DesOrdController = function() {
 							pLstOTSer[y].Id_servicio,
 							pLstOTSer[y].Id_etiqueta_tipo,
 							pLstOTSer[y].Piezas,
+							pLstOTSer[y].PiezasMaq,
 							pLstOTSer[y].Ref1,
 							pLstOTSer[y].Ref2
 						);
-						objOrdTbjSer.PEtiquetaTipo = pLstOTSer[x].PEtiquetaTipo;
+						objOrdTbjSer.PEtiquetaTipo = pLstOTSer[y].PEtiquetaTipo;
+						objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
 						if(objOrdTbjSer.Id_orden_servicio == 1) {
 							objEntLiv = new BeanEntrada_liverpool(
 								pLstOTSer[x].PEntLiv.Id,
@@ -90,8 +92,8 @@ var DesOrdController = function() {
 				var objOrd = {
 					Folio: '',
 					Fecha: '',
-					Precio: 0,
-					Nom: 0
+					Precio: '',
+					Nom: ''
 				};
 				objOrd.Folio = arrExistentes[x].Folio;
 				objOrd.Fecha = arrExistentes[x].Fecha.replace(/(T.*)/g, "");
@@ -100,10 +102,10 @@ var DesOrdController = function() {
 				for(var y in v_LstOTSer) {
 					switch (v_LstOTSer[y].Id_servicio) {
 						case 1:
-							objOrd.Precio = v_LstOTSer[y].Piezas;
+							objOrd.Precio = v_LstOTSer[y].Piezas + '/' + v_LstOTSer[y].PiezasMaq;
 							break;
 						case 2:
-							objOrd.Nom = v_LstOTSer[y].Piezas;
+							objOrd.Nom = v_LstOTSer[y].Piezas + '/' + v_LstOTSer[y].PiezasMaq;
 							break;
 						default:
 							break;

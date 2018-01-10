@@ -72,12 +72,14 @@ var CapmaqController = function() {
 						var lbl_referencia = document.getElementById('lbl_referencia');
 						var lbl_no_pasos = document.getElementById('lbl_no_pasos');
 						var lbl_piezas_sol = document.getElementById('lbl_piezas_sol');
+						var lbl_piezas_x_maq = document.getElementById('lbl_piezas_x_maq');
 						var lbl_etiqueta_tipo = document.getElementById('lbl_etiqueta_tipo');
 
 						lbl_trafico.innerHTML = '';
 						lbl_referencia.innerHTML = '';
 						lbl_no_pasos.innerHTML = '';
 						lbl_piezas_sol.innerHTML = '';
+						lbl_piezas_x_maq.innerHTML = '';
 						lbl_etiqueta_tipo.innerHTML = '';
 
 						var v_idServ = String(x$(this).attr('id')).split('_')[1] * 1;
@@ -93,6 +95,7 @@ var CapmaqController = function() {
 								lbl_referencia.innerHTML = serSelected[0].Ref2;
 								lbl_no_pasos.innerHTML = serSelected[0].PLstPasos.length;
 								lbl_piezas_sol.innerHTML = serSelected[0].Piezas;
+								lbl_piezas_x_maq.innerHTML = serSelected[0].Piezas - serSelected[0].PiezasMaq;
 								lbl_etiqueta_tipo.innerHTML = serSelected[0].PEtiquetaTipo.Nombre;
 								//console.log(serSelected[0].PLstMaq[0].Fecha);
 							} else {
