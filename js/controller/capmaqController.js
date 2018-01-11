@@ -16,6 +16,14 @@ var CapmaqController = function() {
 	} 
 
 	function init_controls() {
+
+		var txt_orden = document.getElementById('txt_orden');
+			var txt_orden_mask = document.getElementById('txt_orden_mask');
+			txt_orden.addEventListener('keyup', function() {
+				txt_orden_mask.value = txt_orden.value.replace(/\D/g,'').substring(0, 8);
+				txt_orden.value = txt_orden_mask.value.replace(/(\d{6})(\d{2})/,"OT-$1-$2");
+			});
+
 		wizard1 = new Wizard({
 			content: 'wizard_2',
 			maxStep: 2,
