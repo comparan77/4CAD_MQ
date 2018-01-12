@@ -18,7 +18,7 @@ var DesOrdController = function() {
 				var objOrdTbjSer;
 				var pLstOTSer;
 				var objEntLiv;
-
+				console.log('qui');
 				if(data.length == 0) {
 					Common.notificationAlert('No existen órdenes de trabajo en sistema', 'Info', 'Ok');
 				}
@@ -72,7 +72,11 @@ var DesOrdController = function() {
 					Common.notificationAlert('Se cargaron ' + arrOrdTbj.length + ' ordenes correctamente', 'Info', 'Ok');			
 				}
 				Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
-			});
+			}, 
+			function (error) {
+				Common.notificationAlert('Error: ' + error + '\nFavor de contactar al administrador', 'Error', 'Ok');
+				Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
+		});
 
 		} catch (error) {
 			Common.notificationAlert(error.message, 'Error', 'Ok');
