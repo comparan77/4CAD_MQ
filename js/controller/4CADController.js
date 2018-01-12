@@ -16,6 +16,8 @@ var CADController = function() {
                 obj = new CapmaqController();
             } else if (type === "desmaq") {
                 obj = new DesmaqController();
+            } else if (type === "config") {
+                obj = new ConfigController();
             }
             x$('#div_' + type).xhr('./' + type + '.html', {
                 async: true,
