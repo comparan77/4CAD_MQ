@@ -51,6 +51,9 @@ var app = {
             oIndexCtrl = new IndexController();
             oCADController = new CADController();
             oCADController.Create('login');
+            if(localStorage.getItem('urlHandler')) {
+                urlHandler = localStorage.getItem('urlHandler');
+            }
         } catch (error) {
             alert(error.message);
         }

@@ -18,6 +18,7 @@ var ConfigController = function() {
     function btn_save_click() {
         btn_save.addEventListener('click', function() {
             urlHandler = txt_url.value;
+            localStorage.setItem('urlHandler', urlHandler);
             Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
         });
     }

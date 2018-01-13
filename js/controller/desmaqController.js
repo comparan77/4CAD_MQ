@@ -15,7 +15,9 @@ var DesmaqController = function() {
 				}
 				else {
 					Common.notificationAlert('Se subieron ' + data + ' capturas correctamente.', 'Info', 'Ok');
+					urlHandler = localStorage.getItem('urlHandler');
 					localStorage.clear();
+					localStorage.setItem('urlHandler', urlHandler);
 					oCADController.Create('desmaq');
 				}
 			});
