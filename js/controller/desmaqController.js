@@ -20,6 +20,10 @@ var DesmaqController = function() {
 					localStorage.setItem('urlHandler', urlHandler);
 					oCADController.Create('desmaq');
 				}
+			}, 
+			function (error) {
+				Common.notificationAlert('Error: ' + error + '\nFavor de contactar al administrador', 'Error', 'Ok');
+				Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
 			});
 		} catch (error) {
 			Common.notificationAlert(error.message, 'Error', 'Ok');
