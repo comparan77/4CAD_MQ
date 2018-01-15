@@ -29,7 +29,8 @@ var DesOrdController = function() {
 						data[x].id,
 						data[x].Folio,
 						data[x].Referencia,
-						data[x].Fecha
+						data[x].Fecha,
+						data[x].Supervisor
 					);
 					pLstOTSer = data[x].PLstOTSer;
 					for (var y in pLstOTSer) {

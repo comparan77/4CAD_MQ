@@ -241,10 +241,17 @@ var RegPasController = function() {
 					return obj.Folio.toUpperCase() == ordenBuscada;
 				});
 
+				lbl_supervisor = document.getElementById('lbl_supervisor');
+				lbl_folio = document.getElementById('lbl_folio');
+				lbl_supervisor.innerHTML = '';
+				lbl_folio.innerHTML = '';
+
 				if(ordenFinded.length > 0) {
 					x$('#div_sel_servicio').removeClass('hidden');
 					x$('#div_new_search').removeClass('hidden');
 					x$('#div_search_orden').addClass('hidden');
+					lbl_folio.innerHTML =  ordenFinded[0].Folio;
+					lbl_supervisor.innerHTML =  ordenFinded[0].Supervisor;
 					fillTblServ(ordenFinded[0].PLstOTSer);
 				}
 				else {
