@@ -23,12 +23,25 @@ var RegPasController = function() {
 	function init_controls() {
 		try {
 
-			var txt_orden = document.getElementById('txt_orden');
-			var txt_orden_mask = document.getElementById('txt_orden_mask');
-			txt_orden.addEventListener('keyup', function() {
-				txt_orden_mask.value = txt_orden.value.replace(/\D/g,'').substring(0, 8);
-				txt_orden.value = txt_orden_mask.value.replace(/(\d{6})(\d{2})/,"OT-$1-$2");
-			});
+			// var txt_orden = document.getElementById('txt_orden');
+			// var txt_orden_mask = document.getElementById('txt_orden_mask');
+			// txt_orden.addEventListener('keyup', function() {
+			// 	txt_orden_mask.value = txt_orden.value.replace(/\D/g,'').substring(0, 8);
+			// 	txt_orden.value = txt_orden_mask.value.replace(/(\d{6})(\d{2})/,"OT-$1-$2");
+			// });
+
+			ddl_orden = document.getElementById('ddl_orden');
+			var opt = document.createElement('option');
+			opt = document.createElement('option');
+			opt.innerHTML = 'Selecciona una orden';
+			opt.value = 'none';
+			ddl_orden.appendChild(opt);
+			for(var i = 0; i < arrExistentes.length; i++) {
+				opt = document.createElement('option');
+				opt.innerHTML = arrExistentes[i].Folio;
+				opt.value = arrExistentes[i].Folio;
+				ddl_orden.appendChild(opt);
+			}
 			
 			wizard1 = new Wizard({
 				content: 'wizard_1',
@@ -37,9 +50,10 @@ var RegPasController = function() {
 
 			wizard1.open();	
 			btn_search_orden_click();
-			btn_new_search_click();
+			btn_new_sel();
 			btn_Photo_click();
 			btn_save_click();
+			ddl_orden_change();
 		} catch (error) {
 			console.log('error wizard: ' + error.message);
 		}
@@ -162,8 +176,8 @@ var RegPasController = function() {
 		oCADController.Create('regpas');
 	}
 
-	function btn_new_search_click() {
-		x$('#btn_new_search').on('click', function() { 
+	function btn_new_sel() {
+		x$('#btn_new_sel').on('click', function() { 
 			clear_form();
 		});
 	}
@@ -262,6 +276,36 @@ var RegPasController = function() {
 
 				Common.setEstatusBtn('btn_search_orden', '<i class="sprite icon Search"></i>Buscar Orden', false);
 			}
+		});
+	}
+
+	function ddl_orden_change() {
+		var ddl_orden = document.getElementById('ddl_orden');
+		ddl_orden.addEventListener('change', function() {
+			for (var i=0; i<ddl_orden.length; i++) {
+				if (ddl_orden.options[i].value == 'none' )
+					ddl_orden.remove(i);
+				}
+			
+				var ordenBuscada = ddl_orden.value;
+				ordenBuscada = ordenBuscada.toUpperCase();
+				ordenFinded = arrExistentes.filter(function (obj) {
+					return obj.Folio.toUpperCase() == ordenBuscada;
+				});
+
+				lbl_supervisor = document.getElementById('lbl_supervisor');
+				lbl_folio = document.getElementById('lbl_folio');
+				lbl_supervisor.innerHTML = '';
+				lbl_folio.innerHTML = '';
+
+				if(ordenFinded.length > 0) {
+					x$('#div_sel_servicio').removeClass('hidden');
+					x$('#div_new_sel').removeClass('hidden');
+					x$('#div_sel_orden').addClass('hidden');
+					lbl_folio.innerHTML =  ordenFinded[0].Folio;
+					lbl_supervisor.innerHTML =  ordenFinded[0].Supervisor;
+					fillTblServ(ordenFinded[0].PLstOTSer);
+				}
 		});
 	}
 }
