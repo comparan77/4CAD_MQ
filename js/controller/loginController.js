@@ -25,8 +25,8 @@ var Login = function() {
 	} 
 
     function btn_click() {
-        x$('#access').on('click', function() {
-            var passValue = x$("#txt_password").attr('value');
+        x$('#access').on('click', function() {            
+            var passValue = x$("#txt_password").attr('value');            
             Common.setEstatusBtn('access', 'Validando', true);
             validaCredenciales('', passValue);
         });

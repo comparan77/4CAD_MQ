@@ -37,20 +37,13 @@ Common.fetchJSONFile = function (path, callback, error, type, jsonData) {
     var httpRequest = new XMLHttpRequest();
     httpRequest.open(type, path, true);
     httpRequest.setRequestHeader("Content-type", "application/json");    
-<<<<<<< HEAD
-=======
     
->>>>>>> a6ca1ec53c2221486faf678da5b6f089fb044efa
     httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState === 4) {
             if (httpRequest.status === 200) {
                 var data = JSON.parse(httpRequest.responseText);
                 if (callback) callback(data);
             } else {
-<<<<<<< HEAD
-                console.log(httpRequest.status);
-=======
->>>>>>> a6ca1ec53c2221486faf678da5b6f089fb044efa
                 if(error) error(httpRequest.status);
             }
         }
