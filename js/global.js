@@ -1,5 +1,5 @@
-var urlHandler = 'http://yaaxil.ddns.net/';
-//urlHandler = 'http://192.168.1.66:84/';
+var urlHandler = 'https://4cad.casc.com.mx/';
+//urlHandler = 'http://192.168.1.66/';
 
 
 var oUsuario;

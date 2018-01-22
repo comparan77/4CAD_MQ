@@ -18,7 +18,6 @@ var DesOrdController = function() {
 				var objOrdTbjSer;
 				var pLstOTSer;
 				var objEntLiv;
-
 				if(data.length == 0) {
 					Common.notificationAlert('No existen órdenes de trabajo en sistema', 'Info', 'Ok');
 				}
