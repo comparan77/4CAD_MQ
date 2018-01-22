@@ -74,6 +74,8 @@ var DesmaqController = function() {
 									objOTSer.Id,
 									objOTSerMaq.Fecha,
 									objOTSerMaq.Piezas,
+									objOTSerMaq.Bultos,
+									objOTSerMaq.Pallets,
 									true
 								)
 
