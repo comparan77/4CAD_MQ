@@ -208,6 +208,8 @@ var CapmaqController = function() {
 					serSelected[0].Id,
 					d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(),
 					String(x$('#txt_pieza_maq').attr('value')) * 1,
+					String(x$('#txt_bulto_maq').attr('value')) * 1,
+					String(x$('#txt_pallet_maq').attr('value')) * 1,
 					false
 				);
 				serSelected[0].PLstMaq = [];

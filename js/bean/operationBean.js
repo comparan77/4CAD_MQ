@@ -35,11 +35,13 @@ var Bean_maquila_paso = function(id, id_ord_tbj_srv, foto64, descripcion) {
     this.Descripcion = descripcion;
 }
 
-var Bean_maquila = function(id, id_ord_tbj_srv, fecha, piezas, capturada) {
+var Bean_maquila = function(id, id_ord_tbj_srv, fecha, piezas, bultos, pallets, capturada) {
     this.Id = id;
     this.Id_ord_tbj_srv = id_ord_tbj_srv;
     this.Fecha = fecha;
     this.Piezas = piezas;
+    this.Bultos = bultos;
+    this.Pallets = pallets;
     this.Capturada = capturada;
     this.PLstPasos = [];
 }
