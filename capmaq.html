@@ -4,16 +4,16 @@
         <h2>Paso 1: B&uacute;squeda de &Oacute;rdenes de Trabajo con registro de pasos</h2>
     </div>
 
-    <div id="div_new_search" class="hidden" style="margin-bottom: 1em">
+    <div id="div_new_sel" class="hidden" style="margin-bottom: 1em">
         <div class="pure-control-group">
-            <button id="btn_new_search" class="pure-button">
-                <i class="sprite icon Search"></i>
-                Realizar nueva b&uacute;squeda
+            <button id="btn_new_sel" class="pure-button">
+                <i class="sprite icon Refresh"></i>
+                Realizar nueva selecci&oacute;n
             </button>
         </div>
     </div>
 
-    <div id="div_search_orden">
+    <!-- <div id="div_search_orden">
         <div class="pure-control-group">
             <input id="txt_orden">
             <input id="txt_orden_mask" style="display:none">
@@ -22,9 +22,21 @@
                 Buscar Orden
             </button>
         </div>
+    </div> -->
+
+    <div id="div_sel_orden">
+        <div class="pure-control-group">
+            <select id="ddl_orden"></select>
+        </div>
     </div>
 
     <div id="div_sel_servicio" class="hidden">
+        <div>
+            <span>Folio: <label style="display: inline;" class="selected" id="lbl_folio"></label></span>
+        </div>
+        <div>
+            <span>Supervisor: <label style="display: inline;" class="selected" id="lbl_supervisor"></label></span>
+        </div>
         <table style="table-layout: fixed; word-wrap: break-word;" class="pure-table" width="95%">
             <thead>
                 <tr>

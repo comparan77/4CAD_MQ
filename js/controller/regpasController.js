@@ -49,7 +49,7 @@ var RegPasController = function() {
 			});
 
 			wizard1.open();	
-			btn_search_orden_click();
+			//btn_search_orden_click();
 			btn_new_sel();
 			btn_Photo_click();
 			btn_save_click();
