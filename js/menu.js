@@ -3,11 +3,11 @@ var Menu = function() {
 	
 	function init(){
 		oCADController.Create(menuAct);
-		x$('#menu').removeClass('hidden');
+		// x$('#menu').removeClass('hidden');
 		x$('#div_' + menuAct).removeClass('hidden');
-		x$('#lnkMenu').click(function() { 
-			document.getElementsByClassName("topnav")[0].classList.toggle("responsive");
-		}); 
+		// x$('#lnkMenu').click(function() { 
+		// 	document.getElementsByClassName("topnav")[0].classList.toggle("responsive");
+		// }); 
 		
 		var opts = x$('li').has('.optMenu');
 		for (var index = 0; index < opts.length; index++) {
@@ -23,8 +23,12 @@ var Menu = function() {
 					x$(this).addClass('active');
 					oCADController.Create(menuSel);
 				}
-				x$('#lnkNav').html('- ' + x$(this).html());
-				document.getElementsByClassName("topnav")[0].classList.toggle("responsive");
+				else {
+					oCADController.Create(menuSel);
+				}
+				closeNav();
+				// x$('#lnkNav').html('- ' + x$(this).html());
+				// document.getElementsByClassName("topnav")[0].classList.toggle("responsive");
 			});
 		}	
 	}
@@ -36,6 +40,6 @@ var Menu = function() {
 			x$('#lnk_' + menuAct).removeClass('active');
 			menuAct = menuSel;
 		}
-		x$('#lnkNav').html('');
+		// x$('#lnkNav').html('');
 	}
 }

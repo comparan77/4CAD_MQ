@@ -1,7 +1,14 @@
+html {
+  height: 90%;
+  margin: 0;
+}
 
 body {
   color: #777;
   line-height: 1.6;
+  height: 100%;
+  margin: 0;
+  transition: background-color .5s;
 }
 
 .header {
@@ -34,12 +41,30 @@ body {
   letter-spacing: -0.02em;
 }
 
+.topMenu {
+  top: 0;
+  padding: 1em;
+  height: 5%;
+  background-color: #333;
+  width: 100%;
+  position: fixed;
+  overflow: hidden;
+}
+
 ul.topnav {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #333;
+}
+
+#menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #fff;
 }
 
 #lnkNav {
@@ -194,6 +219,7 @@ div.photo
   margin-right: 1em;
   margin-bottom: .5em;
   margin-top: .5em;
+  margin-left: 1em;
   padding: .5em;
   padding-right: 1em;
   padding-left: 1em;
@@ -245,3 +271,75 @@ input.masked,
   padding-right: 10px;
   background-color: transparent;
 text-transform: uppercase; }
+
+.wrapper {
+  min-height: 100%;
+
+  /* Equal to height of footer */
+  /* But also accounting for potential margin-bottom of last child */
+  margin-bottom: -50px;
+  padding: 1em;
+  margin-top: 5%;
+  padding-top: 6%;
+}
+.footer,
+.push {
+  height: 50px;
+}
+
+/*side nav*/
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border-right-color: #333;
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #3b8bba;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+.sidenav {padding-top: 15px;}
+.sidenav a {font-size: 18px;}
+}
+
+#topSideNav {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #333;
+  width: 100%;
+  height: 60px;
+}

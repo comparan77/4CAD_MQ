@@ -9,6 +9,7 @@ var Login = function() {
         try {
             if(pass == '') {
                 x$('#div_login').addClass('hidden');
+                x$('#mainMenu').removeClass('hidden');
                 oIndexCtrl.InitMenu();
             }
             else {
@@ -25,8 +26,8 @@ var Login = function() {
 	} 
 
     function btn_click() {
-        x$('#access').on('click', function() {            
-            var passValue = x$("#txt_password").attr('value');            
+        x$('#access').on('click', function() {
+            var passValue = x$("#txt_password").attr('value');
             Common.setEstatusBtn('access', 'Validando', true);
             validaCredenciales('', passValue);
         });

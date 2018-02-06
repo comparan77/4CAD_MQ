@@ -80,7 +80,7 @@
 
 <div id="div_login"></div>
 
-<ul id="menu" class="topnav hidden">
+<!-- <ul id="menu" class="topnav hidden">
   <li><a id="lnkNav" href="#home">- Inicio</a></li>
   <li class="optMenu"><a id="lnk_inicio" class="active" href="#inicio">Inicio</a></li>
   <li class="optMenu"><a id="lnk_desord" href="#desord">Descargar &Oacute;rdenes</a></li>
@@ -101,7 +101,76 @@
     <div class="hidden pure-form" id="div_capmaq"></div>
     <div class="hidden pure-form" id="div_desmaq"></div>    
     <div class="hidden pure-form" id="div_config"></div>
+</div> -->
+
+<div id="mainMenu" class="topMenu hidden">
+    <a id="lnkMenu" href="#" style="font-size:15px;"><span class="sprite Menu icon" onclick="openNav()"></span></a>
 </div>
+
+<div id="mySidenav" class="sidenav">
+    <div id="topSideNav"></div>
+    <ul id="menu" class="">
+        <!-- <li><a id="lnkNav" href="#home">- Inicio</a></li> -->
+        <li class="optMenu"><a id="lnk_inicio" class="active" href="#inicio">Inicio</a></li>
+        <li class="optMenu"><a id="lnk_desord" href="#desord">Descargar &Oacute;rdenes</a></li>
+        <li class="optMenu"><a id="lnk_regpas" href="#regpas">Capturar fotos y pasos</a></li>
+        <li class="optMenu"><a id="lnk_capmaq" href="#capmaq">Capturar maquila</a></li>  
+        <li class="optMenu"><a id="lnk_desmaq" href="#desmaq">Subir Maquila</a></li>  
+        <li class="optMenu"><a id="lnk_config" href="#config">Configuraci&oacute;n</a></li>  
+      </ul>
+</div>
+  
+<div onclick="closeNav()" id="mainWrapper" class="wrapper">
+    <div id="divLoading" class="loading center hidden"></div>
+    <div class="hidden" id="div_inicio"></div>
+    <div class="hidden pure-form" id="div_desord"></div>
+    <div class="hidden pure-form" id="div_regpas"></div>
+    <div class="hidden pure-form" id="div_capmaq"></div>
+    <div class="hidden pure-form" id="div_desmaq"></div>    
+    <div class="hidden pure-form" id="div_config"></div>
+    <div class="push"></div>
+</div>
+
+  <script>
+try {
+
+    var iniValTouchMenu;
+    var finValTouchMenu;
+    var mySidenav = document.getElementById('mySidenav');
+    mySidenav.addEventListener('touchmove', function(evt) {
+        evt.preventDefault();
+        var touches = evt.changedTouches;
+        for(var i = 0; i < touches.length; i++) {
+            if(!iniValTouchMenu)
+                iniValTouchMenu = touches[i].pageX;
+            if(!finValTouchMenu) {
+                if(touches[i].pageX != iniValTouchMenu) {
+                    finValTouchMenu = touches[i].pageX;
+                }
+            }
+        }
+        if(iniValTouchMenu > finValTouchMenu) 
+            closeNav();
+    });
+
+    mySidenav.addEventListener('touchstart', function(evt) {
+        iniValTouchMenu = undefined;
+    });
+
+} catch (error) {
+    console.log(error.message);
+}
+
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+
 </body>
 
 </html>
