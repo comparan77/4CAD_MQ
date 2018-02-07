@@ -178,15 +178,17 @@ var CapmaqController = function() {
 
 				lbl_supervisor = document.getElementById('lbl_supervisor');
 				lbl_folio = document.getElementById('lbl_folio');
+				lbl_ref_ent = document.getElementById('lbl_ref_ent');
 				lbl_supervisor.innerHTML = '';
 				lbl_folio.innerHTML = '';
+				lbl_ref_ent.innerHTML = '';
 				
 				if(ordenFinded.length > 0) {
-
 					x$('#div_sel_servicio').removeClass('hidden');
 					x$('#div_new_sel').removeClass('hidden');
 					x$('#div_sel_orden').addClass('hidden');
 					lbl_folio.innerHTML =  ordenFinded[0].Folio;
+					lbl_ref_ent.innerHTML = ordenFinded[0].PEnt.Referencia;
 					lbl_supervisor.innerHTML =  ordenFinded[0].Supervisor;
 					fillTblServ(ordenFinded[0].PLstOTSer);
 				}
