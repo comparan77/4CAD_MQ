@@ -32,6 +32,7 @@ var DesOrdController = function() {
 						data[x].Supervisor
 					);
 					pLstOTSer = data[x].PLstOTSer;
+					objOrdTbj.PEnt = data[x].PEnt;
 					for (var y in pLstOTSer) {
 						objOrdTbjSer = new Bean_orden_trabajo_servicio(
 							pLstOTSer[y].Id,

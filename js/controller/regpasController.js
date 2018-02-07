@@ -38,7 +38,7 @@ var RegPasController = function() {
 			ddl_orden.appendChild(opt);
 			for(var i = 0; i < arrExistentes.length; i++) {
 				opt = document.createElement('option');
-				opt.innerHTML = arrExistentes[i].Folio;
+				opt.innerHTML = arrExistentes[i].Folio + ' | ' + arrExistentes[i].PEnt.Referencia;
 				opt.value = arrExistentes[i].Folio;
 				ddl_orden.appendChild(opt);
 			}
