@@ -189,6 +189,94 @@ Common.notificaRegExitoso = function() {
     Common.notificationAlert('Registro Exitoso', 'Registro de Información', 'Ok');
 }
 
+/**Manage Files */
+
+Common.readFileFromPath = function(dirEntry, fileName) {
+    dirEntry.getFile(fileName, {create: false, exclusive: false}, function(fileEntry) {
+        return fileEntry;
+    });
+}
+
+Common.readFile = function(fileEntry, callback) {
+
+    fileEntry.file(function (file) {
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+            //console.log("Successful file read: " + this.result);
+            if(callback) callback(this.result);
+            //displayFileData(fileEntry.fullPath + ": " + this.result);
+        };
+
+        reader.readAsText(file);
+
+    }, onErrorReadFile);
+}
+
+function onErrorReadFile() {}
+
+Common.createDirectory = function(rootDirEntry, dir, SubDir) {
+    rootDirEntry.getDirectory(dir, { create: true }, function (dirEntry) {
+        dirEntry.getDirectory(SubDir, { create: true }, function (subDirEntry) {
+
+            //createFile(subDirEntry, "data.txt");
+            //console.log('Create')
+
+        }, onErrorGetDir);
+    }, onErrorGetDir);
+}
+
+Common.CreateFile = function (fileName, isAppend, callBack) {
+    // Creates a new file or returns the file if it already exists.
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
+            try {
+                fs.root.getFile(fileName, { create: true, exclusive: false }, function (fileEntry) {
+                    if(callBack) {
+                        callBack(fileEntry);
+                    } 
+                }, onErrorCreateFile);
+            } catch (err) {
+                console.log(err.message);
+            }
+        }, onErrorLoadFs);
+}
+
+function onErrorCreateFile() {}
+
+function onErrorLoadFs() {}
+
+Common.writeFile = function(fileEntry, dataObj, isAppend, callBack) {
+    // Create a FileWriter object for our FileEntry (log.txt).
+    try {
+        fileEntry.createWriter(function (fileWriter) {
+
+            fileWriter.onwriteend = function() {
+                //console.log("Successful file read...");
+                //readFile(fileEntry);
+            };
+    
+            fileWriter.onerror = function (e) {
+                console.log("Failed file read: " + e.toString());
+            };
+    
+            // If we are appending data to file, go to the end of the file.
+            if (isAppend) {
+                try {
+                    fileWriter.seek(fileWriter.length);
+                }
+                catch (e) {
+                    console.log("file doesn't exist!");
+                }
+            }
+            fileWriter.write(dataObj);
+            if(callBack) callBack();            
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+    
+}
+
 /**Conectividad */
 Common.checkConnection = function() {
     var networkState = navigator.connection.type;

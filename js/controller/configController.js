@@ -5,14 +5,14 @@ var ConfigController = function() {
     var lbl_chk_produccion;
     var chk_produccion;
 
-    function initControles () {
+    function initControles() {
         txt_url = document.getElementById('txt_url');
         btn_save = document.getElementById('btn_save');
         txt_url.value = urlHandler;
         lbl_chk_produccion = document.getElementById('lbl_chk_produccion');
-        chk_produccion = document.getElementById('chk_produccion');
+        chk_produccion = document.getElementById('chk_produccion');        
 
-        chk_produccion.checked = localStorage.getItem('urlHandler') == URL_PROD;
+        chk_produccion.checked = urlHandler == URL_PROD;
         isProduction(chk_produccion.checked);
 
         btn_save_click();
@@ -20,14 +20,20 @@ var ConfigController = function() {
     }
 
     function init() {
-        initControles();
+        ConfigController.readUrlHandler(function(data) {
+            urlHandler = data;
+            initControles();
+        });
     }
 
     function btn_save_click() {
         btn_save.addEventListener('click', function() {
-            urlHandler = txt_url.value;
-            localStorage.setItem('urlHandler', urlHandler);
-            Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
+            
+            //writeUrlHandler(txt_url.value);
+            ConfigController.writeUrlHandler(txt_url.value, function() {
+                Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok'); 
+            });
+            //localStorage.setItem('urlHandler', urlHandler);
         });
     }
 
@@ -35,8 +41,12 @@ var ConfigController = function() {
         chk_produccion.addEventListener('click', function() {
             if(this.checked) {
                 isProduction(true);
-                localStorage.setItem('urlHandler', URL_PROD);
-                Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
+                //writeUrlHandler(URL_PROD);
+                ConfigController.writeUrlHandler(URL_PROD, function() {
+                    Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok'); 
+                })
+                // localStorage.setItem('urlHandler', URL_PROD);
+                // Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
             }
             else {
                 isProduction(false);
@@ -56,4 +66,43 @@ var ConfigController = function() {
             x$('#div_conf_url').removeClass('hidden');
         }
     }
+
+    // function writeUrlHandler(url) {
+    //     Common.CreateFile('urlHandler.txt', false, function(obj) {
+    //         Common.writeFile(obj, url, false, function() {
+    //              //console.log('grabada la url');
+    //              Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
+    //         });
+    //     });
+    // }
+
+    // function readUrlHandler() {
+    //     Common.CreateFile('urlHandler.txt', false, function(obj) { 
+    //         return Common.readFile(obj, function(result) {
+    //             //console.log(result);
+    //             urlHandler = result;
+    //             initControles();
+    //         });
+    //     });
+    // }
+}
+
+ConfigController.writeUrlHandler = function(url, callback) {
+    Common.CreateFile('urlHandler.txt', false, function(obj) {
+        Common.writeFile(obj, url, false, function() {
+             //console.log('grabada la url');
+             //Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
+             if(callback) callback();
+        });
+    });
+}
+
+ConfigController.readUrlHandler = function(callback) {
+    Common.CreateFile('urlHandler.txt', false, function(obj) { 
+        return Common.readFile(obj, function(result) {
+            //console.log(result);
+            // urlHandler = result;
+            if(callback) callback(result);
+        });
+    });
 }

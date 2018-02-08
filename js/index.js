@@ -43,17 +43,23 @@ var app = {
         destinationType=navigator.camera.DestinationType; 
         app.receivedEvent('deviceready');
         FastClick.attach(document.body);
-        
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         try {
             oIndexCtrl = new IndexController();
             oCADController = new CADController();
-            oCADController.Create('login');
-            if(localStorage.getItem('urlHandler')) {
-                urlHandler = localStorage.getItem('urlHandler');
-            }
+            
+            ConfigController.readUrlHandler(function(data) {
+                if(data) {
+                    urlHandler = data;        
+                    oCADController.Create('login');
+                } else {
+                    ConfigController.writeUrlHandler(URL_PROD, function() {
+                        oCADController.Create('login');
+                    });
+                }
+            });
         } catch (error) {
             alert(error.message);
         }
