@@ -4,15 +4,17 @@ var CapmaqController = function() {
 	var arrExistentes;
 
 	function init() {
-		arrExistentes = localStorage.getItem('ordenes');
-		if(arrExistentes!=null && arrExistentes.length>0) {
-			arrExistentes = JSON.parse(arrExistentes);
-			init_controls();	
-		}
-		else {
-			Common.setEstatusBtn('btn_search_orden','<i class="sprite icon Search"></i>Buscar Orden', true);
-			Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
-		}
+		DesOrdController.readFileOrdenes(function(data){
+			arrExistentes = data;
+			if(arrExistentes!=null && arrExistentes.length>0) {
+				arrExistentes = JSON.parse(arrExistentes);
+				init_controls();	
+			}
+			else {
+				Common.setEstatusBtn('btn_search_orden','<i class="sprite icon Search"></i>Buscar Orden', true);
+				Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
+			}
+		});
 	} 
 
 	function init_controls() {
@@ -123,10 +125,10 @@ var CapmaqController = function() {
 							} else {
 								Common.notificationAlert('Es necesario realizar el registro de pasos para el servicio seleccionado', 'info', 'ok');
 							}
-
 					} catch (error) {
 						console.log(error.message);						
 					}
+					return false;
 				});
 			}
 		} catch (error) {
@@ -218,9 +220,10 @@ var CapmaqController = function() {
 				serSelected[0].PLstMaq.push(objMaq);
 
 				Common.setEstatusBtn('btn_save', 'Guardando maquila ...', true);
-				Common.notificationAlert('La maquila ha sido guardada correctamente.', 'Info', 'Ok');
-				localStorage.setItem('ordenes', JSON.stringify(arrExistentes));
-				clear_form();
+				DesOrdController.writeFileOrdenes(JSON.stringify(arrExistentes), function() {
+					Common.notificationAlert('La maquila ha sido guardada correctamente.', 'Info', 'Ok');
+					clear_form();
+				});
 			} catch (error) {
 				Common.notificationAlert(error.message, 'Error', 'Ok');
 				Common.setEstatusBtn('btn_save', 'Guardar Maquila', false);

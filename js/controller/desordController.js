@@ -2,16 +2,11 @@ var DesOrdController = function() {
 	
 	this.Init = init;
 	var grd_ordenes;
+	var arrExistentes;
 	
 	function cargar_ordenes() {
 		try {
-			
-			var arrExistentes = localStorage.getItem('ordenes');
-
 			var arrOrdTbj = [];
-			localStorage.removeItem('ordenes_bak');
-			localStorage.setItem('ordenes_bak', arrExistentes);
-			
 			OperationModel.carga_ordenes_trabajo(function(data) {
 				var objOrdTbj;
 				var arrOrdTbjSer = [];
@@ -20,6 +15,8 @@ var DesOrdController = function() {
 				var objEntLiv;
 				if(data.length == 0) {
 					Common.notificationAlert('No existen órdenes de trabajo en sistema', 'Info', 'Ok');
+					Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
+					return false;
 				}
 
 				for(var x in data) {
@@ -45,7 +42,7 @@ var DesOrdController = function() {
 							pLstOTSer[y].Ref2
 						);
 						objOrdTbjSer.PEtiquetaTipo = pLstOTSer[y].PEtiquetaTipo;
-						objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
+						//objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
 						if(objOrdTbjSer.Id_orden_servicio == 1) {
 							objEntLiv = new BeanEntrada_liverpool(
 								pLstOTSer[x].PEntLiv.Id,
@@ -66,13 +63,16 @@ var DesOrdController = function() {
 					objOrdTbj.PLstOTSer = arrOrdTbjSer;
 					arrOrdTbj.push(objOrdTbj);
 				}
-				localStorage.removeItem('ordenes');
 				if(arrOrdTbj.length>0) {
-					localStorage.setItem('ordenes', JSON.stringify(arrOrdTbj));
-					fillOrdenesTbl();					
-					Common.notificationAlert('Se cargaron ' + arrOrdTbj.length + ' ordenes correctamente', 'Info', 'Ok');			
-				}
-				Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
+					DesOrdController.writeFileOrdenes(JSON.stringify(arrOrdTbj), function() {
+						arrExistentes = JSON.stringify(arrOrdTbj);
+						fillOrdenesTbl();					
+						Common.notificationAlert('Se cargaron ' + arrOrdTbj.length + ' ordenes correctamente', 'Info', 'Ok');
+						Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
+					});
+				} 
+				else
+					Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
 			}, 
 			function (error) {
 				Common.notificationAlert('Error: ' + error + '\nFavor de contactar al administrador', 'Error', 'Ok');
@@ -86,8 +86,6 @@ var DesOrdController = function() {
 	}
 
 	function fillOrdenesTbl() {
-
-		arrExistentes = localStorage.getItem('ordenes');
 		if(arrExistentes!=null && arrExistentes.length>0) {
 			arrExistentes = JSON.parse(arrExistentes);
 			var v_LstOTSer;
@@ -169,4 +167,20 @@ var DesOrdController = function() {
 			}
         });
 	}
+}
+
+DesOrdController.writeFileOrdenes = function(data, callback) {
+	Common.CreateFile('ordenes.txt', false, function(obj) {
+        Common.writeFile(obj, data, false, function() {
+             if(callback) callback();
+        });
+    });
+}
+
+DesOrdController.readFileOrdenes = function(callback) {
+	Common.CreateFile('ordenes.txt', false, function(obj) { 
+        return Common.readFile(obj, function(result) {
+            if(callback) callback(result);
+        });
+    });
 }

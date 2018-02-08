@@ -9,15 +9,17 @@ var RegPasController = function() {
 	var ImgPaso64;
 
 	function init() {
-		arrExistentes = localStorage.getItem('ordenes');
-		if(arrExistentes!=null && arrExistentes.length>0) {
-			arrExistentes = JSON.parse(arrExistentes);
-			init_controls();
-		}
-		else {
-			Common.setEstatusBtn('btn_search_orden','<i class="sprite icon Search"></i>Buscar Orden', true);
-			Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
-		}
+		DesOrdController.readFileOrdenes(function(data){
+			arrExistentes = data;
+			if(arrExistentes!=null && arrExistentes.length>0) {
+				arrExistentes = JSON.parse(arrExistentes);
+				init_controls();
+			}
+			else {
+				Common.setEstatusBtn('btn_search_orden','<i class="sprite icon Search"></i>Buscar Orden', true);
+				Common.notificationAlert('No existen códigos cargados en el dispositivo, favor de realizar la carga.', 'Advertencia', 'Ok');
+			}
+		});
 	} 
 
 	function init_controls() {
@@ -64,9 +66,10 @@ var RegPasController = function() {
 		x$('#btn_save').on('click', function() {
 			try {
 				Common.setEstatusBtn('btn_save', 'Guardando pasos ...', true);
-				Common.notificationAlert('Los pasos han sido guardados.', 'Info', 'Ok');
-				localStorage.setItem('ordenes', JSON.stringify(arrExistentes));
-				clear_form();
+				DesOrdController.writeFileOrdenes(JSON.stringify(arrExistentes), function() {
+					Common.notificationAlert('Los pasos han sido guardados.', 'Info', 'Ok');
+					clear_form();
+				});
 			} catch (error) {
 				Common.notificationAlert('Error: ' + error.message, 'Error al Guardar', 'Ok');
 			}
@@ -237,6 +240,7 @@ var RegPasController = function() {
 					} catch (error) {
 						console.log(error.message);						
 					}
+					return false;
 				});
 			}
 		} catch (error) {

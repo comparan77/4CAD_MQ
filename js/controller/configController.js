@@ -29,11 +29,9 @@ var ConfigController = function() {
     function btn_save_click() {
         btn_save.addEventListener('click', function() {
             
-            //writeUrlHandler(txt_url.value);
             ConfigController.writeUrlHandler(txt_url.value, function() {
                 Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok'); 
             });
-            //localStorage.setItem('urlHandler', urlHandler);
         });
     }
 
@@ -41,12 +39,9 @@ var ConfigController = function() {
         chk_produccion.addEventListener('click', function() {
             if(this.checked) {
                 isProduction(true);
-                //writeUrlHandler(URL_PROD);
                 ConfigController.writeUrlHandler(URL_PROD, function() {
                     Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok'); 
                 })
-                // localStorage.setItem('urlHandler', URL_PROD);
-                // Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
             }
             else {
                 isProduction(false);
@@ -66,25 +61,6 @@ var ConfigController = function() {
             x$('#div_conf_url').removeClass('hidden');
         }
     }
-
-    // function writeUrlHandler(url) {
-    //     Common.CreateFile('urlHandler.txt', false, function(obj) {
-    //         Common.writeFile(obj, url, false, function() {
-    //              //console.log('grabada la url');
-    //              Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok');
-    //         });
-    //     });
-    // }
-
-    // function readUrlHandler() {
-    //     Common.CreateFile('urlHandler.txt', false, function(obj) { 
-    //         return Common.readFile(obj, function(result) {
-    //             //console.log(result);
-    //             urlHandler = result;
-    //             initControles();
-    //         });
-    //     });
-    // }
 }
 
 ConfigController.writeUrlHandler = function(url, callback) {

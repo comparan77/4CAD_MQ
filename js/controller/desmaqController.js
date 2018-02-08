@@ -14,11 +14,10 @@ var DesmaqController = function() {
 					Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
 				}
 				else {
-					Common.notificationAlert('Se subieron ' + data + ' capturas correctamente.', 'Info', 'Ok');
-					urlHandler = localStorage.getItem('urlHandler');
-					localStorage.clear();
-					localStorage.setItem('urlHandler', urlHandler);
-					oCADController.Create('desmaq');
+					DesOrdController.writeFileOrdenes('', function() { 
+						Common.notificationAlert('Se subieron ' + data + ' capturas correctamente.', 'Info', 'Ok');
+						oCADController.Create('desmaq');
+					});
 				}
 			}, 
 			function (error) {
@@ -32,7 +31,6 @@ var DesmaqController = function() {
 	}
 
 	function fillMaquilaCapturada() {
-		arrExistentes = localStorage.getItem('ordenes');
 		Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Sin maquila capturada', true);
 		
 		if(arrExistentes!=null && arrExistentes.length>0) {
@@ -103,8 +101,11 @@ var DesmaqController = function() {
 	}
 
 	function init() {
-		fillMaquilaCapturada();
-		init_controls();
+		DesOrdController.readFileOrdenes(function(data){
+			arrExistentes = data;
+			fillMaquilaCapturada();
+			init_controls();
+		});
 	}
 	
 	function init_controls() {
