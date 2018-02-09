@@ -18,7 +18,7 @@ xmlns:android  = "http://schemas.android.com/apk/res/android"
                  mode="merge"
                  platform="android">
         <application android:allowBackup="false"/>
-        <application android:theme="@android:style/Theme.Light.NoTitleBar"></application>
+        <application android:theme="@android:style/Theme.NoTitleBar"></application>
     </edit-config>
 
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
