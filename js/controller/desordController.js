@@ -20,48 +20,53 @@ var DesOrdController = function() {
 				}
 
 				for(var x in data) {
-					arrOrdTbjSer = [];
-					objOrdTbj = new Bean_orden_trabajo(
-						data[x].id,
-						data[x].Folio,
-						data[x].Referencia,
-						data[x].Fecha,
-						data[x].Supervisor
-					);
-					pLstOTSer = data[x].PLstOTSer;
-					objOrdTbj.PEnt = data[x].PEnt;
-					for (var y in pLstOTSer) {
-						objOrdTbjSer = new Bean_orden_trabajo_servicio(
-							pLstOTSer[y].Id,
-							pLstOTSer[y].Id_orden_trabajo,
-							pLstOTSer[y].Id_servicio,
-							pLstOTSer[y].Id_etiqueta_tipo,
-							pLstOTSer[y].Piezas,
-							pLstOTSer[y].PiezasMaq,
-							pLstOTSer[y].Ref1,
-							pLstOTSer[y].Ref2
+					var ordTbjExistente = findOrdTrbInLocal(data[x].Folio);
+					if(ordTbjExistente == null) {
+						arrOrdTbjSer = [];
+						objOrdTbj = new Bean_orden_trabajo(
+							data[x].id,
+							data[x].Folio,
+							data[x].Referencia,
+							data[x].Fecha,
+							data[x].Supervisor
 						);
-						objOrdTbjSer.PEtiquetaTipo = pLstOTSer[y].PEtiquetaTipo;
-						//objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
-						if(objOrdTbjSer.Id_orden_servicio == 1) {
-							objEntLiv = new BeanEntrada_liverpool(
-								pLstOTSer[x].PEntLiv.Id,
-								pLstOTSer[x].PEntLiv.Id_entrada,
-								pLstOTSer[x].PEntLiv.Proveedor,
-								pLstOTSer[x].PEntLiv.Trafico,
-								pLstOTSer[x].PEntLiv.Pedido,
-								pLstOTSer[x].PEntLiv.Piezas,
-								pLstOTSer[x].PEntLiv.Fecha_confirma,
-								pLstOTSer[x].PEntLiv.Piezas_maq,
-								pLstOTSer[x].PEntLiv.Fecha_maquila,
-								pLstOTSer[x].PEntLiv.Num_pasos
-							)
-							objOrdTbjSer.PEntLiv = objEntLiv;
+						pLstOTSer = data[x].PLstOTSer;
+						objOrdTbj.PEnt = data[x].PEnt;
+						for (var y in pLstOTSer) {
+							objOrdTbjSer = new Bean_orden_trabajo_servicio(
+								pLstOTSer[y].Id,
+								pLstOTSer[y].Id_orden_trabajo,
+								pLstOTSer[y].Id_servicio,
+								pLstOTSer[y].Id_etiqueta_tipo,
+								pLstOTSer[y].Piezas,
+								pLstOTSer[y].PiezasMaq,
+								pLstOTSer[y].Ref1,
+								pLstOTSer[y].Ref2
+							);
+							objOrdTbjSer.PEtiquetaTipo = pLstOTSer[y].PEtiquetaTipo;
+							//objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
+							if(objOrdTbjSer.Id_orden_servicio == 1) {
+								objEntLiv = new BeanEntrada_liverpool(
+									pLstOTSer[x].PEntLiv.Id,
+									pLstOTSer[x].PEntLiv.Id_entrada,
+									pLstOTSer[x].PEntLiv.Proveedor,
+									pLstOTSer[x].PEntLiv.Trafico,
+									pLstOTSer[x].PEntLiv.Pedido,
+									pLstOTSer[x].PEntLiv.Piezas,
+									pLstOTSer[x].PEntLiv.Fecha_confirma,
+									pLstOTSer[x].PEntLiv.Piezas_maq,
+									pLstOTSer[x].PEntLiv.Fecha_maquila,
+									pLstOTSer[x].PEntLiv.Num_pasos
+								)
+								objOrdTbjSer.PEntLiv = objEntLiv;
+							}
+							arrOrdTbjSer.push(objOrdTbjSer);
 						}
-						arrOrdTbjSer.push(objOrdTbjSer);
+						objOrdTbj.PLstOTSer = arrOrdTbjSer;
+						arrOrdTbj.push(objOrdTbj);
+					} else {
+						arrOrdTbj.push(ordTbjExistente);
 					}
-					objOrdTbj.PLstOTSer = arrOrdTbjSer;
-					arrOrdTbj.push(objOrdTbj);
 				}
 				if(arrOrdTbj.length>0) {
 					DesOrdController.writeFileOrdenes(JSON.stringify(arrOrdTbj), function() {
@@ -71,9 +76,11 @@ var DesOrdController = function() {
 						Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
 					});
 				} 
-				else
+				else {
+					Common.notificationAlert('Por el momento no existen nuevas órdenes de trabajo', 'Info', 'Ok');
 					Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
-			}, 
+				}		
+			},
 			function (error) {
 				Common.notificationAlert('Error: ' + error + '\nFavor de contactar al administrador', 'Error', 'Ok');
 				Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
@@ -131,6 +138,16 @@ var DesOrdController = function() {
 
 	}
 
+	function findOrdTrbInLocal(folio) {
+		var itemOT;
+		if(arrExistentes!=null && arrExistentes.length>0) {
+			var itemOT = arrExistentes.filter(function(obj) {
+				return obj.Folio == folio;
+			});
+		}
+		return itemOT.length > 0 ? itemOT[0] : null;
+	}
+
 	function find_ordenes_maquilados(codliver) {
 		var maquilados = [];
 		try {
@@ -162,7 +179,12 @@ var DesOrdController = function() {
 					break;
 				default:
 					Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargando ordenes...', true);
-					cargar_ordenes();
+					DesOrdController.readFileOrdenes(function(data){
+						arrExistentes = data;
+						if(arrExistentes!=null && arrExistentes.length>0) 
+							arrExistentes = JSON.parse(arrExistentes);
+						cargar_ordenes();
+					});
 					break;
 			}
         });
