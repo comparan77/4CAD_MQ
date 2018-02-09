@@ -82,6 +82,7 @@
 
 <div id="mainMenu" class="topMenu hidden">
     <a id="lnkMenu" href="#" style="font-size:15px;"><span class="sprite Menu icon"></span></a>
+    <span id="spn_ver">&nbsp;v 1.001</span>
 </div>
 
 <div id="mySidenav" class="sidenav">
@@ -106,47 +107,6 @@
     <div class="hidden pure-form" id="div_config"></div>
     <div class="push"></div>
 </div>
-
-  <script>
-// try {
-
-//     var iniValTouchMenu;
-//     var finValTouchMenu;
-//     var mySidenav = document.getElementById('mySidenav');
-//     mySidenav.addEventListener('touchmove', function(evt) {
-//         evt.preventDefault();
-//         var touches = evt.changedTouches;
-//         for(var i = 0; i < touches.length; i++) {
-//             if(!iniValTouchMenu)
-//                 iniValTouchMenu = touches[i].pageX;
-//             if(!finValTouchMenu) {
-//                 if(touches[i].pageX != iniValTouchMenu) {
-//                     finValTouchMenu = touches[i].pageX;
-//                 }
-//             }
-//         }
-//         if(iniValTouchMenu > finValTouchMenu) 
-//             closeNav();
-//     });
-
-//     mySidenav.addEventListener('touchstart', function(evt) {
-//         iniValTouchMenu = undefined;
-//     });
-
-// } catch (error) {
-//     console.log(error.message);
-// }
-
-
-// function openNav() {
-//     document.getElementById("mySidenav").style.width = "250px";
-// }
-
-// function closeNav() {
-//     document.getElementById("mySidenav").style.width = "0";
-// }
-</script>
-
 </body>
 
 </html>
