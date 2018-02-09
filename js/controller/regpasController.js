@@ -153,13 +153,20 @@ var RegPasController = function() {
 				//console.log(base64Image); 
 				ImgPaso64 = base64Image.replace('data:image/jpeg;base64,','');
 			});
-			Common.notificationPrompt(
-				'Descripción del paso',
-				'Pasos',
-				['Cancelar','Ok'],
-				'',
-				setPhoto
-			);
+			// Common.notificationPrompt(
+			// 	'Descripción del paso',
+			// 	'Pasos',
+			// 	['Cancelar','Ok'],
+			// 	'',
+			// 	setPhoto
+			// );
+			var pasoDesc = prompt('\tPasos \nDescripción del paso','');
+			var results = {
+				input1: pasoDesc,
+				buttonIndex: pasoDesc == null ? 1: 2
+			}
+			setPhoto(results);
+
 		} catch (error) {
 			console.log('PhotoReady: ' + error.message)
 		}

@@ -47,6 +47,7 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         try {
+
             oIndexCtrl = new IndexController();
             oCADController = new CADController();
             
