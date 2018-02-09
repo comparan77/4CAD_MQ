@@ -112,13 +112,6 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <edit-config file="AndroidManifest.xml"
-                 target="/manifest/application"
-                 mode="merge"
-                 platform="android">
-        <application android:allowBackup="false"/>
-        <application android:theme="@android:style/Theme.Light.NoTitleBar"></application>
-    </edit-config>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
