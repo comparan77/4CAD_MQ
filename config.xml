@@ -119,3 +119,16 @@
     </platform> 
 
 </widget>
+<edit-config file="AndroidManifest.xml"
+
+                 target="/manifest/application"
+
+                 mode="merge"
+
+                 platform="android">
+
+        <application android:allowBackup="false"/>
+
+        <application android:theme="@android:style/Theme.Light.NoTitleBar"></application>
+
+    </edit-config>
