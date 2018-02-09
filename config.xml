@@ -10,6 +10,15 @@
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
+
+    <edit-config file="AndroidManifest.xml"
+                 target="/manifest/application"
+                 mode="merge"
+                 platform="android">
+        <application android:allowBackup="false"/>
+        <application android:theme="@android:style/Theme.Light.NoTitleBar"></application>
+    </edit-config>
+
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
     <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0" />
@@ -32,10 +41,7 @@
     <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0" />
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1" />
     <icon src="icon.png" />
-
-    <gap:config-file platform="android" parent="/manifest">
-<application android:theme="@android:style/Theme.NoTitleBar"></application></gap:config-file>
-
+    
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
