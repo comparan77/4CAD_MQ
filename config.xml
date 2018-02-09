@@ -13,13 +13,10 @@ xmlns:android  = "http://schemas.android.com/apk/res/android"
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
 
-    <edit-config file="AndroidManifest.xml"
-                 target="/manifest/application"
-                 mode="merge"
-                 platform="android">
-        <application android:allowBackup="false"/>
-        <application android:theme="@android:style/Theme.NoTitleBar"></application>
-    </edit-config>
+    <gap:config-file platform="android" parent="/manifest">
+
+    <application android:theme="@android:style/Theme.NoTitleBar"></application>
+</gap:config-file>
 
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1" />
