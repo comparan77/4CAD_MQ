@@ -71,6 +71,7 @@ var CapmaqController = function() {
 				var cellTipo = row.insertCell(0);
 				var cellRef = row.insertCell(1);
 				var cellPieza = row.insertCell(2);
+				var cellPaso = row.insertCell(3);
 
 				switch (data[x].Id_servicio) {
 					case 1:
@@ -85,6 +86,8 @@ var CapmaqController = function() {
 				cellRef.innerHTML = '<a href="#" id="lnkSerSel_' + data[x].Id + '">' + data[x].Ref2 + '</a>';
 				cellPieza.innerHTML = data[x].Piezas;
 				cellPieza.setAttribute('align', 'center');
+				cellPaso.innerHTML = data[x].PLstPasos.length;
+				cellPaso.setAttribute('align', 'center');
 
 				x$('#lnkSerSel_' + data[x].Id).on('click', function(){
 					try {
@@ -123,7 +126,7 @@ var CapmaqController = function() {
 								lbl_etiqueta_tipo.innerHTML = serSelected[0].PEtiquetaTipo.Nombre;
 								//console.log(serSelected[0].PLstMaq[0].Fecha);
 							} else {
-								Common.notificationAlert('Es necesario realizar el registro de pasos para el servicio seleccionado', 'info', 'ok');
+								Common.notificationAlert('Es necesario realizar el registro de pasos para el servicio: ' + String(x$(this).html()), 'info', 'ok');
 							}
 					} catch (error) {
 						console.log(error.message);						
