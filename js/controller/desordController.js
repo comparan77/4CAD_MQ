@@ -139,7 +139,7 @@ var DesOrdController = function() {
 	}
 
 	function findOrdTrbInLocal(folio) {
-		var itemOT;
+		var itemOT = [];
 		if(arrExistentes!=null && arrExistentes.length>0) {
 			var itemOT = arrExistentes.filter(function(obj) {
 				return obj.Folio == folio;

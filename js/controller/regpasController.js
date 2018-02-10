@@ -128,7 +128,7 @@ var RegPasController = function() {
 				else {
 					vPaso++;
 					appendPaso(txtPromt);
-					if(vPaso>0) {
+					if(vPaso>0) {						
 						var oOrdSerPas = new Bean_maquila_paso(
 							0,
 							serSelected[0].Id,
@@ -152,21 +152,13 @@ var RegPasController = function() {
 			getFileContentAsBase64(imageData,function(base64Image) {
 				//console.log(base64Image); 
 				ImgPaso64 = base64Image.replace('data:image/jpeg;base64,','');
+				var pasoDesc = prompt('\tPasos \nDescripción del paso','');
+				var results = {
+					input1: pasoDesc,
+					buttonIndex: pasoDesc == null ? 1: 2
+				}
+				setPhoto(results);
 			});
-			// Common.notificationPrompt(
-			// 	'Descripción del paso',
-			// 	'Pasos',
-			// 	['Cancelar','Ok'],
-			// 	'',
-			// 	setPhoto
-			// );
-			var pasoDesc = prompt('\tPasos \nDescripción del paso','');
-			var results = {
-				input1: pasoDesc,
-				buttonIndex: pasoDesc == null ? 1: 2
-			}
-			setPhoto(results);
-
 		} catch (error) {
 			console.log('PhotoReady: ' + error.message)
 		}
