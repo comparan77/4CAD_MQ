@@ -28,8 +28,8 @@ var ConfigController = function() {
 
     function btn_save_click() {
         btn_save.addEventListener('click', function() {
-            
             ConfigController.writeUrlHandler(txt_url.value, function() {
+                urlHandler = txt_url.value;
                 Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok'); 
             });
         });
@@ -40,6 +40,7 @@ var ConfigController = function() {
             if(this.checked) {
                 isProduction(true);
                 ConfigController.writeUrlHandler(URL_PROD, function() {
+                    urlHandler = URL_PROD;
                     Common.notificationAlert('La configuración se ha guardado correctamente.', 'Info', 'Ok'); 
                 })
             }

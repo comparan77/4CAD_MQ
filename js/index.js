@@ -17,9 +17,6 @@
  * under the License.
  */
 
-//var lstTarima = [];
-//var urlHandler = 'https://servidor.casc.com.mx/';
-
 var app = {
     // Application Constructor
     initialize: function() {
