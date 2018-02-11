@@ -5,6 +5,7 @@ var DesmaqController = function() {
 	var arrCapturados;
 	var arrXguardar = [];
 	var grd_maquila;
+	var arrSinMaquila = [];
 
 	function subir_maquila() {
 		try {
@@ -14,7 +15,11 @@ var DesmaqController = function() {
 					Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
 				}
 				else {
-					DesOrdController.writeFileOrdenes('', function() { 
+					if(arrSinMaquila.length > 0)
+						arrSinMaquila = JSON.stringify(arrSinMaquila);
+					else 
+						arrSinMaquila = '';
+					DesOrdController.writeFileOrdenes(arrSinMaquila, function() { 
 						Common.notificationAlert('Se subieron ' + data + ' capturas correctamente.', 'Info', 'Ok');
 						oCADController.Create('desmaq');
 					});
@@ -44,14 +49,15 @@ var DesmaqController = function() {
 				var arrOTSer = objOT.PLstOTSer.filter(function (obj) {
 					return obj.PLstMaq != undefined && obj.PLstMaq.length > 0;
 				});
-				
+				arrSinMaquila.push(objOT);
 				if(arrOTSer != undefined && arrOTSer.length > 0) {
+					arrSinMaquila.pop();
 					for(var b in arrOTSer) {
 						var objOTSer = arrOTSer[b];
 						var arrOTSerMaq = objOTSer.PLstMaq.filter(function (obj) {
 							return obj.Capturada == false;
 						});
-
+						
 						if(arrOTSerMaq != undefined && arrOTSerMaq.length > 0) {
 							for(var c in arrOTSerMaq) {
 								var objOTSerMaq = arrOTSerMaq[c];

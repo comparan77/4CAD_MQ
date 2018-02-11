@@ -131,11 +131,11 @@ var RegPasController = function() {
 					if(vPaso>0) {						
 						var oOrdSerPas = new Bean_maquila_paso(
 							0,
-							serSelected[0].Id,
+							serSelected.Id,
 							ImgPaso64,
 							txtPromt
 						);
-						serSelected[0].PLstPasos.push(oOrdSerPas);
+						serSelected.PLstPasos.push(oOrdSerPas);
 					}
 				}
 				break;
@@ -152,7 +152,7 @@ var RegPasController = function() {
 			getFileContentAsBase64(imageData,function(base64Image) {
 				//console.log(base64Image); 
 				ImgPaso64 = base64Image.replace('data:image/jpeg;base64,','');
-				var pasoDesc = prompt('\tPasos \nDescripción del paso','');
+				var pasoDesc = prompt('Descripción del paso:','');
 				var results = {
 					input1: pasoDesc,
 					buttonIndex: pasoDesc == null ? 1: 2
@@ -196,6 +196,7 @@ var RegPasController = function() {
 				var cellTipo = row.insertCell(0);
 				var cellRef = row.insertCell(1);
 				var cellPieza = row.insertCell(2);
+				var cellPaso = row.insertCell(3);
 
 				switch (data[x].Id_servicio) {
 					case 1:
@@ -210,6 +211,8 @@ var RegPasController = function() {
 				cellRef.innerHTML = '<a href="#" id="lnkSerSel_' + data[x].Id + '">' + data[x].Ref2 + '</a>';
 				cellPieza.innerHTML = data[x].Piezas;
 				cellPieza.setAttribute('align', 'center');
+				cellPaso.innerHTML = data[x].PLstPasos.length;
+				cellPaso.setAttribute('align', 'center');
 
 				x$('#lnkSerSel_' + data[x].Id).on('click', function(){
 					try {
@@ -227,14 +230,25 @@ var RegPasController = function() {
 							return obj.Id == v_idServ;
 						});
 
-						serSelected[0].PLstPasos = [];
+						serSelected = serSelected[0];
+
+						if(serSelected.PLstPasos != undefined && serSelected.PLstPasos.length > 0) {
+							for(var itemFoto in serSelected.PLstPasos) {
+								vPaso++;
+								var img = document.getElementById("img_foto");
+								img.setAttribute('src', 'data:image/jpeg;base64,' + serSelected.PLstPasos[itemFoto].Foto64);
+								appendPaso(serSelected.PLstPasos[itemFoto].Descripcion);
+							}
+						} else {
+							serSelected.PLstPasos = [];
+						}
 						
 						wizard1.setStepValid(1);
 						wizard1.enabledBtnNext();
 
-						lbl_trafico.innerHTML = serSelected[0].Ref1;
-						lbl_referencia.innerHTML = serSelected[0].Ref2;
-						lbl_etiqueta_tipo.innerHTML = serSelected[0].PEtiquetaTipo.Nombre;
+						lbl_trafico.innerHTML = serSelected.Ref1;
+						lbl_referencia.innerHTML = serSelected.Ref2;
+						lbl_etiqueta_tipo.innerHTML = serSelected.PEtiquetaTipo.Nombre;
 
 					} catch (error) {
 						console.log(error.message);						
