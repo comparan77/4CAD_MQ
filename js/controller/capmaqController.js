@@ -72,6 +72,7 @@ var CapmaqController = function() {
 				var cellRef = row.insertCell(1);
 				var cellPieza = row.insertCell(2);
 				var cellPaso = row.insertCell(3);
+				var cellMaq = row.insertCell(4);
 
 				switch (data[x].Id_servicio) {
 					case 1:
@@ -88,6 +89,21 @@ var CapmaqController = function() {
 				cellPieza.setAttribute('align', 'center');
 				cellPaso.innerHTML = data[x].PLstPasos.length;
 				cellPaso.setAttribute('align', 'center');
+
+				var arrMaquiladas = data[x].PLstMaq.filter(function(obj){
+					return obj.Piezas > 0;
+				});
+
+				var pzasMaq = 0;
+
+				if(arrMaquiladas!=undefined && arrMaquiladas.length > 0) {
+					for(var itemMaq in arrMaquiladas) {
+						pzasMaq += arrMaquiladas[itemMaq].Piezas;
+					}
+				}
+
+				cellMaq.innerHTML = pzasMaq;
+				cellMaq.setAttribute('align', 'center');
 
 				x$('#lnkSerSel_' + data[x].Id).on('click', function(){
 					try {
