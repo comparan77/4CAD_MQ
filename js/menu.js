@@ -6,7 +6,7 @@ var Menu = function() {
 	
 	function init() {
 		mySidenav = document.getElementById('mySidenav');
-		oCADController.Create(menuAct);
+		oAppController.Create(menuAct);
 		x$('#div_' + menuAct).removeClass('hidden');
 		
 		initControls();	
@@ -33,13 +33,13 @@ var Menu = function() {
 				{
 					x$('#div_' + menuAct).addClass('hidden');
 					x$('#div_' + menuAct).html('');
-					removeActive(menuSel);
+					Menu.removeActive(menuSel);
 					x$('#div_' + menuSel).removeClass('hidden');
 					x$(this).addClass('active');
-					oCADController.Create(menuSel);
+					oAppController.Create(menuSel);
 				}
 				else {
-					oCADController.Create(menuSel);
+					oAppController.Create(menuSel);
 				}
 				Menu.closeNav();
 			});
@@ -67,14 +67,34 @@ var Menu = function() {
 			iniValTouchMenu = undefined;
 		});
 	}
+}
 
-	function removeActive(menuSel) {
-		
-		if(menuAct != menuSel) 
-		{
-			x$('#lnk_' + menuAct).removeClass('active');
-			menuAct = menuSel;
+Menu.removeActive = function(menuSel) {
+	if(menuAct != menuSel) 
+	{
+		x$('#lnk_' + menuAct).removeClass('active');
+		menuAct = menuSel;
+	}
+}
+
+Menu.changeOpt = function(opt) {
+	if(menuAct != opt) 
+	{
+		x$('#div_' + menuAct).addClass('hidden');
+		x$('#div_' + menuAct).html('');
+		Menu.removeActive(opt);
+		x$('#div_' + opt).removeClass('hidden');
+		var optMenuClass = document.getElementsByClassName('optMenu');
+		for(itemOpt in optMenuClass) {
+			objSel = optMenuClass[itemOpt];
+			if(objSel.firstChild.getAttribute('id').split('_')[1] == opt) 
+				break;
 		}
+		objSel.firstChild.className = 'active';
+		oAppController.Create(opt);
+	}
+	else {
+		oAppController.Create(opt);
 	}
 }
 
