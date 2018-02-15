@@ -6,7 +6,7 @@ var Menu = function() {
 	
 	function init() {
 		mySidenav = document.getElementById('mySidenav');
-		oAppController.Create(menuAct);
+		oCADController.Create(menuAct);
 		x$('#div_' + menuAct).removeClass('hidden');
 		
 		initControls();	
@@ -36,10 +36,10 @@ var Menu = function() {
 					Menu.removeActive(menuSel);
 					x$('#div_' + menuSel).removeClass('hidden');
 					x$(this).addClass('active');
-					oAppController.Create(menuSel);
+					oCADController.Create(menuSel);
 				}
 				else {
-					oAppController.Create(menuSel);
+					oCADController.Create(menuSel);
 				}
 				Menu.closeNav();
 			});
@@ -91,10 +91,10 @@ Menu.changeOpt = function(opt) {
 				break;
 		}
 		objSel.firstChild.className = 'active';
-		oAppController.Create(opt);
+		oCADController.Create(opt);
 	}
 	else {
-		oAppController.Create(opt);
+		oCADController.Create(opt);
 	}
 }
 
