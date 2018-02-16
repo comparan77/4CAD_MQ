@@ -7,7 +7,6 @@ var Bean_orden_trabajo = function(id, folio, referencia, fecha, supervisor) {
     this.Supervisor = supervisor;
     this.PLstOTSer = [];
     this.PEnt;
-    //this.PorSubir;
 }
 
 var Bean_orden_trabajo_servicio = function(id, id_orden_trabajo, id_servicio, id_etiqueta_tipo, piezas, piezasMaq, ref1, ref2) {

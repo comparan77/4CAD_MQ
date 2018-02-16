@@ -188,6 +188,7 @@ var RegPasController = function() {
 		try {
 			var table = document.getElementById("tbody_serv_pasos");
 			table.innerHTML = '';
+			var withMaquila = false;
 			for(var x in data) {
 				var row = table.insertRow(x);
 				if(x % 2 != 0)
@@ -208,14 +209,20 @@ var RegPasController = function() {
 					default:
 						break;
 				}
-				cellRef.innerHTML = '<a href="#" id="lnkSerSel_' + data[x].Id + '">' + data[x].Ref2 + '</a>';
+				withMaquila = data[x].PiezasMaq != 0;
+				cellRef.innerHTML = '<a href="#" withMaq=' + withMaquila + ' id="lnkSerSel_' + data[x].Id + '">' + data[x].Ref2 + '</a>';
 				cellPieza.innerHTML = data[x].Piezas;
 				cellPieza.setAttribute('align', 'center');
 				cellPaso.innerHTML = data[x].PLstPasos.length;
-				cellPaso.setAttribute('align', 'center');
-
-				x$('#lnkSerSel_' + data[x].Id).on('click', function(){
+				cellPaso.setAttribute('align', 'center');				
+				x$('#lnkSerSel_' + data[x].Id).on('click', function() {
 					try {
+
+						if(this.getAttribute('withMaq')=='true') {
+							Common.notificationAlert('La referencia ya cuenta con fotos.', 'Info', 'Ok');
+							wizard1.disabledBtnNext();
+							return false;
+						}
 
 						var lbl_trafico = document.getElementById('lbl_trafico');
 						var lbl_referencia = document.getElementById('lbl_referencia');
