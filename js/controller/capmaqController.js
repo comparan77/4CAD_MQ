@@ -129,7 +129,8 @@ var CapmaqController = function() {
 						serSelected = ordenFinded[0].PLstOTSer.filter(function (obj) {
 							return obj.Id == v_idServ;
 						});
-						if(serSelected[0].PLstPasos != undefined)
+
+						if(serSelected[0].PLstPasos != undefined )
 							if(serSelected[0].PLstPasos.length > 0) {
 								wizard1.setStepValid(1);
 								wizard1.enabledBtnNext();

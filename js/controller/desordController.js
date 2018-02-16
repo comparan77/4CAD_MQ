@@ -44,7 +44,10 @@ var DesOrdController = function() {
 								pLstOTSer[y].Ref2
 							);
 							objOrdTbjSer.PEtiquetaTipo = pLstOTSer[y].PEtiquetaTipo;
-							//objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
+							if(pLstOTSer[y].PLstMaq) {
+								objOrdTbjSer.PLstMaq = pLstOTSer[y].PLstMaq;
+								objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
+							}
 							if(objOrdTbjSer.Id_orden_servicio == 1) {
 								objEntLiv = new BeanEntrada_liverpool(
 									pLstOTSer[x].PEntLiv.Id,

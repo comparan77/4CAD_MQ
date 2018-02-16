@@ -209,7 +209,7 @@ var RegPasController = function() {
 					default:
 						break;
 				}
-				withMaquila = data[x].PiezasMaq != 0;
+				withMaquila = data[x].PLstMaq.length > 1;
 				cellRef.innerHTML = '<a href="#" withMaq=' + withMaquila + ' id="lnkSerSel_' + data[x].Id + '">' + data[x].Ref2 + '</a>';
 				cellPieza.innerHTML = data[x].Piezas;
 				cellPieza.setAttribute('align', 'center');
