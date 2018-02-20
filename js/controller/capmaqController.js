@@ -230,7 +230,7 @@ var CapmaqController = function() {
 				var objMaq = new Bean_maquila (
 					0,
 					serSelected[0].Id,
-					d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(),
+					d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + String(x$('#horaMaquila').attr('value')),
 					String(x$('#txt_pieza_maq').attr('value')) * 1,
 					String(x$('#txt_bulto_maq').attr('value')) * 1,
 					String(x$('#txt_pallet_maq').attr('value')) * 1,
