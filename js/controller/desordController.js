@@ -148,7 +148,12 @@ var DesOrdController = function() {
 				return obj.Folio == folio;
 			});
 		}
-		return itemOT.length > 0 ? itemOT[0] : null;
+		if(itemOT.length != undefined && itemOT.length > 0) {
+			if(itemOT.PLstOTSer.length > 0)
+				return itemOT[0];
+			else return null;
+		}
+		//return itemOT.length > 0 ? itemOT[0] : null;
 	}
 
 	function find_ordenes_maquilados(codliver) {
