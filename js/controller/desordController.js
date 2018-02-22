@@ -149,7 +149,7 @@ var DesOrdController = function() {
 			});
 		}
 		if(itemOT.length != undefined && itemOT.length > 0) {
-			if(itemOT.PLstOTSer.length > 0)
+			if(itemOT[0].PLstOTSer.length > 0)
 				return itemOT[0];
 			else 
 				return null;
