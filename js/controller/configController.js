@@ -17,6 +17,7 @@ var ConfigController = function() {
 
         btn_save_click();
         chk_produccion_click();
+        btn_clear_all_data_click();
     }
 
     function init() {
@@ -61,6 +62,10 @@ var ConfigController = function() {
             x$('#lbl_chk_produccion').removeClass('selected');
             x$('#div_conf_url').removeClass('hidden');
         }
+    }
+
+    function btn_clear_all_data() {
+        
     }
 }
 
