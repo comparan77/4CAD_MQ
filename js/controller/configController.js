@@ -64,8 +64,22 @@ var ConfigController = function() {
         }
     }
 
-    function btn_clear_all_data() {
-        
+    function btn_clear_all_data_click() {
+        btn_clear_all_data.addEventListener('click', function() {
+            Common.notificationConfirm('Desea limpiar todo la información capturada?', 'Limpiar', ['Si', 'No'], confirm_clear_data); 
+        });
+    }
+
+    function confirm_clear_data(btn_idx) {
+        if(btn_idx == 1) {
+            clear_all_data();
+        }
+    }
+
+    function clear_all_data() {
+        DesOrdController.writeFileOrdenes('', function() { 
+            Common.notificationAlert('Se limpió correctamente toda la información.', 'Info', 'Ok');
+        });
     }
 }
 
