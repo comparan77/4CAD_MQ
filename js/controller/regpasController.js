@@ -7,8 +7,16 @@ var RegPasController = function() {
 	var wizard1;
 	var vPaso = 0;
 	var ImgPaso64;
+	var vPasoDelete = undefined;
+	var pasos;
+
+	var iniValTouchMenu;
+    var finValTouchMenu;
 
 	function init() {
+
+		pasos = document.getElementById('div_pasos');
+
 		DesOrdController.readFileOrdenes(function(data){
 			arrExistentes = data;
 			if(arrExistentes!=null && arrExistentes.length>0) {
@@ -24,13 +32,6 @@ var RegPasController = function() {
 
 	function init_controls() {
 		try {
-
-			// var txt_orden = document.getElementById('txt_orden');
-			// var txt_orden_mask = document.getElementById('txt_orden_mask');
-			// txt_orden.addEventListener('keyup', function() {
-			// 	txt_orden_mask.value = txt_orden.value.replace(/\D/g,'').substring(0, 8);
-			// 	txt_orden.value = txt_orden_mask.value.replace(/(\d{6})(\d{2})/,"OT-$1-$2");
-			// });
 
 			ddl_orden = document.getElementById('ddl_orden');
 			var opt = document.createElement('option');
@@ -51,7 +52,6 @@ var RegPasController = function() {
 			});
 
 			wizard1.open();	
-			//btn_search_orden_click();
 			btn_new_sel();
 			btn_Photo_click();
 			btn_save_click();
@@ -59,7 +59,6 @@ var RegPasController = function() {
 		} catch (error) {
 			console.log('error wizard: ' + error.message);
 		}
-		//alert(arrExistentes[0].PLstOTSer[0].PLstPasos[0].Id_servicio);
 	}
 
 	function btn_save_click() {
@@ -79,8 +78,7 @@ var RegPasController = function() {
 	function appendPaso(txtPromt) {
 		
 				try {
-					var pasos = document.getElementById('div_pasos');
-					
+		
 					var divRow = document.createElement('div');
 					divRow.setAttribute('id', 'div_paso_' + vPaso)
 					divRow.className = 'pure-g';
@@ -108,11 +106,49 @@ var RegPasController = function() {
 					divRow.appendChild(divCellDesc);
 			
 					pasos.appendChild(divRow);
+
+					divCellImg.addEventListener('touchmove', function(evt) {
+						if(vPasoDelete== undefined) {
+							evt.preventDefault();
+							var touches = evt.changedTouches;
+							for(var i = 0; i < touches.length; i++) {
+								if(!iniValTouchMenu)
+									iniValTouchMenu = touches[i].pageX;
+								if(!finValTouchMenu) {
+									if(touches[i].pageX != iniValTouchMenu) {
+										finValTouchMenu = touches[i].pageX;
+									}
+								}
+							}
+							
+							if(iniValTouchMenu != finValTouchMenu) {
+								vPasoDelete = this.parentNode.getAttribute('id');
+								if(vPaso == vPasoDelete.split('_')[2]*1) {
+									Common.notificationConfirm('Desea eliminar el paso capturado?', 'Eliminar', ['Si', 'No'], confirm_remove_paso); 
+								} else {
+									vPasoDelete = undefined;
+								}
+							}
+						}
+					});
+
+					imgPaso.addEventListener('touchstart', function(evt) {
+						iniValTouchMenu = undefined;
+					});
+
 				} catch (error) {
 					console.log('appendPaso error: ' + error.message)
-				}
-				
+				}	
 			}
+
+	function confirm_remove_paso(btn_idx) {
+		if(btn_idx == 1) {
+			document.getElementById(vPasoDelete).remove();
+			serSelected.PLstPasos.pop();
+			vPaso --;
+		}
+		vPasoDelete = undefined;
+	}
 
 	function setPhoto(results) {
 		switch (results.buttonIndex) {
@@ -217,6 +253,8 @@ var RegPasController = function() {
 				cellPaso.setAttribute('align', 'center');				
 				x$('#lnkSerSel_' + data[x].Id).on('click', function() {
 					try {
+						vPaso = 0;
+						pasos.innerHTML = '';
 
 						if(this.getAttribute('withMaq')=='true') {
 							Common.notificationAlert('La referencia ya cuenta con fotos.', 'Info', 'Ok');
