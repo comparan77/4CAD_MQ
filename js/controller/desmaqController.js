@@ -51,7 +51,11 @@ var DesmaqController = function() {
 				});
 				arrSinMaquila.push(objOT);
 				if(arrOTSer != undefined && arrOTSer.length > 0) {
-					arrSinMaquila.pop();
+					var arrPasos = objOT.PLstOTSer.filter(function (obj) {
+						return obj.PLstPasos != undefined && obj.PLstPasos.length > 0;
+					});
+					if(arrPasos == undefined || arrPasos.length == 0)
+						arrSinMaquila.pop();
 					for(var b in arrOTSer) {
 						var objOTSer = arrOTSer[b];
 						var arrOTSerMaq = objOTSer.PLstMaq.filter(function (obj) {
