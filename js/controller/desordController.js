@@ -21,7 +21,7 @@ var DesOrdController = function() {
 
 				for(var x in data) {
 					var ordTbjExistente = findOrdTrbInLocal(data[x].Folio);
-					if(ordTbjExistente == null) {
+					// if(ordTbjExistente == null) {
 						arrOrdTbjSer = [];
 						objOrdTbj = new Bean_orden_trabajo(
 							data[x].id,
@@ -48,6 +48,15 @@ var DesOrdController = function() {
 								objOrdTbjSer.PLstMaq = pLstOTSer[y].PLstMaq;
 								objOrdTbjSer.PLstPasos = pLstOTSer[y].PLstPasos;
 							}
+							
+							if(ordTbjExistente!=null) {
+								ordTbjExistente.PLstOTSer.filter(function(obj) {
+									if(obj.Id == objOrdTbjSer.Id) {
+										objOrdTbjSer.PLstPasos = obj.PLstPasos;
+									}
+								});
+							}
+							
 							if(objOrdTbjSer.Id_orden_servicio == 1) {
 								objEntLiv = new BeanEntrada_liverpool(
 									pLstOTSer[x].PEntLiv.Id,
@@ -67,9 +76,9 @@ var DesOrdController = function() {
 						}
 						objOrdTbj.PLstOTSer = arrOrdTbjSer;
 						arrOrdTbj.push(objOrdTbj);
-					} else {
-						arrOrdTbj.push(ordTbjExistente);
-					}
+					// } else {
+					// 	arrOrdTbj.push(ordTbjExistente);
+					// }
 				}
 				if(arrOrdTbj.length>0) {
 					DesOrdController.writeFileOrdenes(JSON.stringify(arrOrdTbj), function() {

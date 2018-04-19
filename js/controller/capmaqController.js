@@ -131,6 +131,9 @@ var CapmaqController = function() {
 						});
 
 						if(serSelected[0].PLstPasos != undefined )
+							if(serSelected[0].PLstMaq.length > 0 && serSelected[0].PLstMaq[serSelected[0].PLstMaq.length - 1].Id == -1) {
+								Common.notificationAlert('El servicio: ' + String(x$(this).html()) + ', ya ha sido descargado en la nube, es necesario volver a descargar las OT', 'info', 'ok');								
+							} else {
 							if(serSelected[0].PLstPasos.length > 0) {
 								wizard1.setStepValid(1);
 								wizard1.enabledBtnNext();
@@ -145,6 +148,7 @@ var CapmaqController = function() {
 							} else {
 								Common.notificationAlert('Es necesario realizar el registro de pasos para el servicio: ' + String(x$(this).html()), 'info', 'ok');
 							}
+						}
 					} catch (error) {
 						console.log(error.message);						
 					}
@@ -236,7 +240,7 @@ var CapmaqController = function() {
 					String(x$('#txt_pallet_maq').attr('value')) * 1,
 					false
 				);
-				serSelected[0].PLstMaq = [];
+				//serSelected[0].PLstMaq = [];
 				serSelected[0].PLstMaq.push(objMaq);
 
 				Common.setEstatusBtn('btn_save', 'Guardando maquila ...', true);
