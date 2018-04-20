@@ -26,6 +26,7 @@ var DesOrdController = function() {
 							data[x].id,
 							data[x].Folio,
 							data[x].Referencia,
+							data[x].Referencia_entrada,
 							data[x].Fecha,
 							data[x].Supervisor
 						);

@@ -1,8 +1,9 @@
 /**Orden de trabajo */
-var Bean_orden_trabajo = function(id, folio, referencia, fecha, supervisor) {
+var Bean_orden_trabajo = function(id, folio, referencia, referencia_entrada, fecha, supervisor) {
     this.Id = id;
     this.Folio = folio;
     this.Referencia = referencia;
+    this.Referencia_entrada = referencia_entrada;
     this.Fecha = fecha;
     this.Supervisor = supervisor;
     this.PLstOTSer = [];
