@@ -48,7 +48,6 @@ var CapmaqController = function() {
 		});
 		
 		wizard1.open();	
-		//btn_search_orden_click();
 		btn_new_sel();
 		btn_save_maquila_click();
 		ddl_orden_change();
@@ -144,7 +143,6 @@ var CapmaqController = function() {
 								lbl_piezas_sol.innerHTML = serSelected[0].Piezas;
 								lbl_piezas_x_maq.innerHTML = serSelected[0].Piezas - serSelected[0].PiezasMaq;
 								lbl_etiqueta_tipo.innerHTML = serSelected[0].PEtiquetaTipo.Nombre;
-								//console.log(serSelected[0].PLstMaq[0].Fecha);
 							} else {
 								Common.notificationAlert('Es necesario realizar el registro de pasos para el servicio: ' + String(x$(this).html()), 'info', 'ok');
 							}
@@ -240,7 +238,6 @@ var CapmaqController = function() {
 					String(x$('#txt_pallet_maq').attr('value')) * 1,
 					false
 				);
-				//serSelected[0].PLstMaq = [];
 				serSelected[0].PLstMaq.push(objMaq);
 
 				Common.setEstatusBtn('btn_save', 'Guardando maquila ...', true);

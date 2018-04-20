@@ -5,7 +5,6 @@ var DesmaqController = function() {
 	var arrCapturados;
 	var arrXguardar = [];
 	var grd_maquila;
-	var arrSinMaquila = [];
 
 	function subir_maquila() {
 		try {
@@ -15,10 +14,6 @@ var DesmaqController = function() {
 					Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
 				}
 				else {
-					// if(arrSinMaquila.length > 0)
-					// 	arrSinMaquila = JSON.stringify(arrSinMaquila);
-					// else 
-					// 	arrSinMaquila = '';
 					arrExistentes = JSON.stringify(arrExistentes);
 					DesOrdController.writeFileOrdenes(arrExistentes, function() { 
 						Common.notificationAlert('Se subieron ' + data + ' capturas correctamente.', 'Info', 'Ok');
@@ -88,50 +83,6 @@ var DesmaqController = function() {
 				idxOT++;
 				idxOTS = 0;
 			});
-
-			/* for(var a in arrExistentes) {
-				var objOT = arrExistentes[a];
-				var arrOTSer = objOT.PLstOTSer.filter(function (obj) {
-					return obj.PLstMaq != undefined && obj.PLstMaq.length > 0;
-				});
-				if(arrOTSer != undefined && arrOTSer.length > 0) {
-					for(var b in arrOTSer) {
-						var objOTSer = arrOTSer[b];
-						var arrOTSerMaq = objOTSer.PLstMaq.filter(function (obj) {
-							return obj.Capturada == false;
-						});
-						
-						if(arrOTSerMaq != undefined && arrOTSerMaq.length > 0) {
-							for(var c in arrOTSerMaq) {
-								var objOTSerMaq = arrOTSerMaq[c];
-								
-								var objCap = {
-									folio: objOT.Folio,
-									servicio: objOTSer.Id_servicio == 1 ? 'Precio' : 'NOM',
-									pasos: objOTSer.PLstPasos.length,
-									piezas: objOTSerMaq.Piezas
-								};
-
-								arrCapturados.push(objCap);
-
-								var objMaq = new Bean_maquila(
-									0,
-									objOTSer.Id,
-									objOTSerMaq.Fecha,
-									objOTSerMaq.Piezas,
-									objOTSerMaq.Bultos,
-									objOTSerMaq.Pallets,
-									true
-								)
-
-								objMaq.PLstPasos = objOTSer.PLstPasos;
-								arrXguardar.push(objMaq);
-								numRow ++;
-							}
-						}
-					}
-				} 
-			} */
 
 			if(numRow>0) {
 				grd_maquila = new DataGrid({

@@ -21,7 +21,6 @@ var DesOrdController = function() {
 
 				for(var x in data) {
 					var ordTbjExistente = findOrdTrbInLocal(data[x].Folio);
-					// if(ordTbjExistente == null) {
 						arrOrdTbjSer = [];
 						objOrdTbj = new Bean_orden_trabajo(
 							data[x].id,
@@ -76,9 +75,6 @@ var DesOrdController = function() {
 						}
 						objOrdTbj.PLstOTSer = arrOrdTbjSer;
 						arrOrdTbj.push(objOrdTbj);
-					// } else {
-					// 	arrOrdTbj.push(ordTbjExistente);
-					// }
 				}
 				if(arrOrdTbj.length>0) {
 					DesOrdController.writeFileOrdenes(JSON.stringify(arrOrdTbj), function() {
@@ -164,7 +160,6 @@ var DesOrdController = function() {
 				return null;
 		} else
 			return null;
-		//return itemOT.length > 0 ? itemOT[0] : null;
 	}
 
 	function find_ordenes_maquilados(codliver) {
