@@ -34,7 +34,7 @@ var CapmaqController = function() {
 		ddl_orden.appendChild(opt);
 		for(var i = 0; i < arrExistentes.length; i++) {
 			opt = document.createElement('option');
-			opt.innerHTML = arrExistentes[i].Folio + ' | ' + arrExistentes[i].PEnt.Referencia;
+			opt.innerHTML = arrExistentes[i].Folio + ' | ' + arrExistentes[i].Referencia_entrada;
 			opt.value = arrExistentes[i].Folio;
 			ddl_orden.appendChild(opt);
 		}
@@ -212,7 +212,7 @@ var CapmaqController = function() {
 					x$('#div_new_sel').removeClass('hidden');
 					x$('#div_sel_orden').addClass('hidden');
 					lbl_folio.innerHTML =  ordenFinded[0].Folio;
-					lbl_ref_ent.innerHTML = ordenFinded[0].PEnt.Referencia;
+					lbl_ref_ent.innerHTML = ordenFinded[0].Referencia_entrada;
 					lbl_supervisor.innerHTML =  ordenFinded[0].Supervisor;
 					fillTblServ(ordenFinded[0].PLstOTSer);
 				}
