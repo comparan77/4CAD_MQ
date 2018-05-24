@@ -17,18 +17,22 @@ var DesmaqController = function() {
 					arrExistentes = JSON.stringify(arrExistentes);
 					DesOrdController.writeFileOrdenes(arrExistentes, function() { 
 						Common.notificationAlert('Se subieron ' + data + ' capturas correctamente.', 'Info', 'Ok');
-						oCADController.Create('desmaq');
+						clear_form();
 					});
 				}
 			}, 
 			function (error) {
 				Common.notificationAlert('Error: ' + error + '\nFavor de contactar al administrador', 'Error', 'Ok');
-				Common.setEstatusBtn('btn_load', '<i class="sprite icon DownloadfromtheCloud"></i>&nbsp;Descargar órdenes', false);
+				Common.setEstatusBtn('btn_load', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
 			});
 		} catch (error) {
 			Common.notificationAlert(error.message, 'Error', 'Ok');
 			Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
 		}
+	}
+
+	function clear_form() {
+		Menu.changeOpt('desmaq');
 	}
 
 	function fillMaquilaCapturada() {
