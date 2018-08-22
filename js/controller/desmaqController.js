@@ -13,6 +13,10 @@ var DesmaqController = function() {
 					Common.notificationAlert(data, 'Error', 'ok');
 					Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
 				}
+				else if (data * 1 == 0) {
+					Common.notificationAlert('No se pudo concretar la operación', 'Error', 'ok');
+					Common.setEstatusBtn('btn_upload', '<i class="sprite icon UploadtotheCloud"></i>&nbsp;Subir Maquila', false);
+				}
 				else {
 					arrExistentes = JSON.stringify(arrExistentes);
 					DesOrdController.writeFileOrdenes(arrExistentes, function() { 
